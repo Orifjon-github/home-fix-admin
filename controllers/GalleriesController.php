@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Galleries;
 use app\models\GalleriesSearch;
 use app\services\HelperService;
+use yii\db\StaleObjectException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -130,26 +131,31 @@ class GalleriesController extends Controller
     }
 
     /**
-     * Deletes an existing Galleries model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws StaleObjectException
+     * @throws \Throwable
+     * @throws NotFoundHttpException
      */
-    public function actionDelete($id)
+    public function actionDelete($id): Response
     {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
+    /**
+     * @throws NotFoundHttpException
+     */
     public function actionEnable($id): Response
     {
         $model = $this->findModel($id);
         HelperService::changeEnableDisable($model);
         return $this->redirect('index');
     }
-    protected function findModel($id)
+
+    /**
+     * @throws NotFoundHttpException
+     */
+    protected function findModel($id): ?Galleries
     {
         if (($model = Galleries::findOne(['id' => $id])) !== null) {
             return $model;
