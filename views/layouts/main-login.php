@@ -25,7 +25,7 @@ dmstr\adminlte\web\AdminLteAsset::register($this);
 
     <div class="login-box">
         <div class="login-logo">
-            <img src="/logo.png" alt="milliy" style="max-height: 100px">
+            <img src="/home-fix.png" alt="home-fix-logo">
         </div>
 
         <?= \dmstr\adminlte\widgets\Alert::widget(); ?>

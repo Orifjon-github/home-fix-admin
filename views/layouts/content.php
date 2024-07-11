@@ -45,5 +45,5 @@ use dmstr\adminlte\widgets\Alert;
 </div>
 
 <footer class="main-footer">
-    <strong>FIIT</strong>
+    <strong>HomeFix</strong>
 </footer>
