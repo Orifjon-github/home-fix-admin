@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'value') ?>
 
-    <?= $form->field($model, 'value_uz') ?>
+    <?= $form->field($model, 'value_ru') ?>
 
     <?= $form->field($model, 'enable') ?>
 

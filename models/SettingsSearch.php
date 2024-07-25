@@ -18,7 +18,7 @@ class SettingsSearch extends Settings
     {
         return [
             [['id'], 'integer'],
-            [['key', 'value', 'value_uz', 'value_en', 'enable', 'created_at', 'updated_at'], 'safe'],
+            [['key', 'value', 'value_ru', 'value_en', 'enable', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -68,11 +68,15 @@ class SettingsSearch extends Settings
 
         $query->andFilterWhere(['like', 'key', $this->key])
             ->andFilterWhere(['like', 'value', $this->value])
-            ->andFilterWhere(['like', 'value_uz', $this->value_uz])
+            ->andFilterWhere(['like', 'value_ru', $this->value_ru])
             ->andFilterWhere(['like', 'value_en', $this->value_en])
             ->andFilterWhere(['like', 'enable', $this->enable]);
 
+        // Apply the not like condition for the key column
+        $query->andWhere(['not like', 'key', 'seo_%']);
+
         $query->orderBy(['key' => SORT_ASC]);
+
         return $dataProvider;
     }
 }

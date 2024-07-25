@@ -2,32 +2,38 @@
 
 namespace app\services;
 
+use yii\base\Model;
 use yii\web\UploadedFile;
 
 class FileService
 {
-    const UPLOAD_PATH = 'uploads/';
-    public $model;
+    public Model $model;
     public function __construct($model)
     {
         $this->model = $model;
     }
 
-    public function create(): bool
+    public function create($attr): bool
     {
-        $this->handleFileUpload('image');
-        $this->handleFileUpload('image_uz');
-        $this->handleFileUpload('image_en');
+        $attribute = $attr ?: 'image';
+        $attribute_ru = $attr ? $attr.'_ru' : 'image_ru';
+        $attribute_en = $attr ? $attr.'_en' : 'image_en';
+        $this->handleFileUpload($attribute);
+        $this->handleFileUpload($attribute_ru);
+        $this->handleFileUpload($attribute_en);
 
         $this->model->save();
         return true;
     }
 
-    public function update($oldImage=null, $oldImageUz=null, $oldImageEn=null): bool
+    public function update($oldImage=null, $oldImageRu=null, $oldImageEn=null, $attr=false): bool
     {
-        $this->handleFileUpload('image', $oldImage);
-        $this->handleFileUpload('image_uz', $oldImageUz);
-        $this->handleFileUpload('image_en', $oldImageEn);
+        $attribute = $attr ?: 'image';
+        $attribute_ru = $attr ? $attr.'_ru' : 'image_ru';
+        $attribute_en = $attr ? $attr.'_en' : 'image_en';
+        $this->handleFileUpload($attribute, $oldImage);
+        $this->handleFileUpload($attribute_ru, $oldImageRu);
+        $this->handleFileUpload($attribute_en, $oldImageEn);
 
         $this->model->save();
         return true;
@@ -38,7 +44,7 @@ class FileService
         $file = UploadedFile::getInstance($this->model, $attribute);
 
         if ($file) {
-            $filePath = self::UPLOAD_PATH . uniqid() . '.' . $file->extension;
+            $filePath = 'uploads/' . uniqid() . '.' . $file->extension;
 
             if ($file->saveAs($filePath)) {
                 $this->model->$attribute = $filePath;

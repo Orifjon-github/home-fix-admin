@@ -4,7 +4,9 @@ namespace app\controllers;
 
 use app\models\Socials;
 use app\models\SocialsSearch;
+use app\services\FileService;
 use app\services\HelperService;
+use Faker\Core\File;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -12,15 +14,10 @@ use yii\filters\VerbFilter;
 use yii\web\Response;
 use yii\web\UploadedFile;
 
-/**
- * SocialsController implements the CRUD actions for Socials model.
- */
+
 class SocialsController extends Controller
 {
-    /**
-     * @inheritDoc
-     */
-    public function behaviors()
+    public function behaviors(): array
     {
         return array_merge(
             parent::behaviors(),
@@ -35,12 +32,7 @@ class SocialsController extends Controller
         );
     }
 
-    /**
-     * Lists all Socials models.
-     *
-     * @return string
-     */
-    public function actionIndex()
+    public function actionIndex(): string
     {
         $searchModel = new SocialsSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
@@ -51,40 +43,21 @@ class SocialsController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single Socials model.
-     * @param string $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
+    public function actionView($id): string
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
     }
 
-    /**
-     * Creates a new Socials model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
-    public function actionCreate()
+    public function actionCreate(): Response|string
     {
         $model = new Socials();
-
+        $fileService = new FileService($model);
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $newValue = UploadedFile::getInstance($model, 'icon');
-                $uploadPath = 'uploads/';
-                $fileName = uniqid() . '.' . $newValue->extension;
-                $filePath = $uploadPath . $fileName;
-                if ($newValue->saveAs($filePath)) {
-                    $model->icon = $filePath;
-                }
-                if ($model->save()) {
-                    return $this->redirect(['view', 'id' => $model->id]);
-                }
+                $fileService->create('icon');
+                return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();
@@ -95,33 +68,14 @@ class SocialsController extends Controller
         ]);
     }
 
-    /**
-     * Updates an existing Socials model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
+    public function actionUpdate($id): Response|string
     {
         $model = $this->findModel($id);
+        $fileService = new FileService($model);
         $oldValue = $model->icon;
         if ($this->request->isPost && $model->load($this->request->post())) {
-            $newValue = UploadedFile::getInstance($model, 'icon');
-            if ($newValue) {
-                $uploadPath = 'uploads/';
-                $fileName = uniqid() . '.' . $newValue->extension;
-                $filePath = $uploadPath . $fileName;
-
-                if ($newValue->saveAs($filePath)) {
-                    $model->icon = $filePath;
-                }
-            } else {
-                $model->icon = $oldValue;
-            }
-            if ($model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
+            $fileService->update($oldValue, attr: 'icon');
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -129,14 +83,7 @@ class SocialsController extends Controller
         ]);
     }
 
-    /**
-     * Deletes an existing Socials model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
+    public function actionDelete($id): Response
     {
         $this->findModel($id)->delete();
 
@@ -150,19 +97,11 @@ class SocialsController extends Controller
         return $this->redirect('index');
     }
 
-    /**
-     * Finds the Socials model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id ID
-     * @return Socials the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
+    protected function findModel($id): bool|Socials|null
     {
         if (($model = Socials::findOne(['id' => $id])) !== null) {
             return $model;
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        return false;
     }
 }

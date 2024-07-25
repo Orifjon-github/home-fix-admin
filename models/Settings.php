@@ -13,57 +13,49 @@ use yii\web\Response;
  * @property int $id
  * @property string $key
  * @property string $value
- * @property string|null $value_uz
+ * @property string|null $value_ru
  * @property string|null $value_en
+ * @property string $type
  * @property string $enable
  * @property string|null $created_at
  * @property string|null $updated_at
  */
 class Settings extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
+    const FILE_TYPE = 'image';
+    const HTML_TYPE = 'html';
+    const TEXT_TYPE = 'text';
+    public static function tableName(): string
     {
         return 'settings';
     }
 
-    /**
-     * @return \yii\db\Connection the database connection used by this AR class.
-     */
     public static function getDb()
     {
         return Yii::$app->get('db2');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
-            [['key', 'value'], 'required'],
-            [['value', 'value_uz','value_en', 'enable'], 'string'],
+            [['key'], 'required'],
+            [['value', 'value_ru','value_en', 'enable'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['key'], 'string', 'max' => 255],
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
-            'key' => 'Ключ',
-            'value' => 'Ценить',
-            'value_uz' => 'Ценить по-узбекски',
-            'value_en' => 'Ценить по-английски',
-            'enable' => 'Включить/Отключить',
-            'created_at' => 'Создан',
-            'updated_at' => 'Обновлен',
+            'key' => 'Key',
+            'value' => 'Value',
+            'value_ru' => 'Value Ru',
+            'value_en' => 'Value En',
+            'enable' => 'Enable/Disable',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
         ];
     }
 
@@ -103,38 +95,5 @@ class Settings extends \yii\db\ActiveRecord
         ];
 
         return $list[$key] ?? null;
-    }
-    public static function fileKeys(): array
-    {
-        return [
-            'logo',
-            'background_image_partner',
-            'about_image',
-            'about_video_image',
-            'about_image2',
-            'result_video',
-            'consultation_image',
-            'productBg',
-            'contactBg',
-            'aboutBg',
-            'blogBg',
-            'cartBg',
-            'favoritesBg',
-            'partnerBg',
-            'about_video',
-            'result_image',
-            'advantageBg',
-            'consultationBg',
-            'galleryBg'
-        ];
-    }
-
-    public static function htmlKeys(): array
-    {
-        return [
-            'about_description',
-            'terms_partner_1',
-            'terms_partner_2',
-        ];
     }
 }
