@@ -94,6 +94,6 @@ class Settings extends \yii\db\ActiveRecord
             'result_image' => 'Изображение для результатов',
         ];
 
-        return $list[$key] ?? null;
+        return $list[$key] ?? $key;
     }
 }
