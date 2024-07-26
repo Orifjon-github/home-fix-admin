@@ -9,7 +9,7 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var app\models\Settings $model */
 
-$this->title = $model->id;
+$this->title = Settings::settingKeys($model->key);
 $this->params['breadcrumbs'][] = ['label' => 'Настройки', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'contentOptions' => ['style' => 'text-overflow: ellipsis; white-space: nowrap; max-width: 25vw; overflow: hidden;'],
                         'format' => 'raw',
                         'value' => function (Settings $model) {
-                            if (str_starts_with($model->value, 'uploads/')) {
+                            if ($model->type == 'image') {
                                 return Html::a('Просмотр Файл', ['/' . $model->value], ['target' => '_blank']);
                             } else {
                                 return $model->value;
@@ -59,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             if (empty($model->value_ru)) {
                                 return "";
                             }
-                            if (str_starts_with($model->value_ru, 'uploads/')) {
+                            if ($model->type == 'image') {
                                 return Html::a('Просмотр Файл', ['/' . $model->value_ru], ['target' => '_blank']);
                             } else {
                                 return $model->value_ru;
@@ -74,7 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             if (empty($model->value_en)) {
                                 return "";
                             }
-                            if (str_starts_with($model->value_en, 'uploads/')) {
+                            if ($model->type == 'image') {
                                 return Html::a('Просмотр Файл', ['/' . $model->value_en], ['target' => '_blank']);
                             } else {
                                 return $model->value_en;

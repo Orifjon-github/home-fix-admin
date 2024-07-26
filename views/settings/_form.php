@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
         <div class="card-body">
             <?php $form = ActiveForm::begin();
                 $key = Settings::settingKeys($model->key) ?? $model->key;
-                echo $form->field($model, 'key')->textInput(['maxLength' => true, 'readonly' => true, 'value' => $key])
+                echo $form->field($model, 'key')->textInput(['maxLength' => true, 'readonly' => true])
             ?>
             <?php
             if ($model->type == Settings::FILE_TYPE) {

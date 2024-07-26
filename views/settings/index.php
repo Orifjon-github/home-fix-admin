@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'contentOptions' => ['style' => 'text-overflow: ellipsis; white-space: nowrap; max-width: 25vw; overflow: hidden;'],
                         'format' => 'raw',
                         'value' => function (Settings $model) {
-                            if (str_starts_with($model->value, 'uploads/')) {
+                            if ($model->type == 'image') {
                                 return Html::a('Просмотр Файл', ['/' . $model->value], ['target' => '_blank']);
                             } else {
                                 return $model->value;
@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             if (empty($model->value_ru)) {
                                 return "";
                             }
-                            if (str_starts_with($model->value_ru, 'uploads/')) {
+                            if ($model->type == 'image') {
                                 return Html::a('Просмотр Файл', ['/' . $model->value_ru], ['target' => '_blank']);
                             } else {
                                 return $model->value_ru;
