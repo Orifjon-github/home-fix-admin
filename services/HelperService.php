@@ -3,6 +3,7 @@
 namespace app\services;
 
 use Yii;
+use yii\base\Model;
 use yii\grid\ActionColumn;
 use yii\helpers\Html;
 
@@ -23,9 +24,9 @@ class HelperService
         ];
     }
 
-    public static function image($lang='ru', $icon="image"): array
+    public static function image($lang='uz', $icon="image"): array
     {
-        $image = ($lang == "ru") ? $icon : "$icon" .'_'. "$lang";
+        $image = ($lang == "uz") ? $icon : "$icon" .'_'. "$lang";
         return [
             'attribute' => $image,
             'format' => 'raw',
@@ -93,5 +94,60 @@ class HelperService
         }
         Yii::$app->session->setFlash('error', 'Временная ошибка');
         return true;
+    }
+
+    public static function findModel($model, $id) {
+        if (($model = $model::findOne(['id' => $id])) !== null) {
+            return $model;
+        }
+        return null;
+    }
+
+    public static function createModel($controller, $model) {
+        if ($controller->request->isPost) {
+            $fileService = new FileService($model);
+            if ($model->load($controller->request->post())) {
+                $fileService->create();
+                if ($model->save()) {
+                    return $controller->redirect(['view', 'id' => $model->id]);
+                }
+            }
+        } else {
+            $model->loadDefaultValues();
+        }
+
+        return $controller->render('create', [
+            'model' => $model,
+        ]);
+    }
+
+    public static function updateModel($controller, $model, $id, $attr = 'image', $type=0) {
+        $model = self::findModel($model, $id);
+        $fileService = new FileService($model);
+        $oldValue = $model->$attr;
+        if ($type) {
+            $attrRu = $attr . '_ru';
+            $attrEn = $attr . '_en';
+            $oldValueRu = $model->$attrRu;
+            $oldValueEn = $model->$attrEn;
+        }
+        if ($controller->request->isPost && $model->load($controller->request->post())) {
+            $type ? $fileService->update($oldValue, $oldValueRu, $oldValueEn) : $fileService->update($oldValue);
+            if ($model->save()) {
+                return $controller->redirect(['view', 'id' => $model->id]);
+            }
+        }
+
+        return $controller->render('update', [
+            'model' => $model,
+        ]);
+    }
+
+    public static function index($controller, $searchModel) {
+        $dataProvider = $searchModel->search($controller->request->queryParams);
+        return $controller->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 }

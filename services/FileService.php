@@ -13,7 +13,7 @@ class FileService
         $this->model = $model;
     }
 
-    public function create($attr): bool
+    public function create($attr=null): bool
     {
         $attribute = $attr ?: 'image';
         $attribute_ru = $attr ? $attr.'_ru' : 'image_ru';
