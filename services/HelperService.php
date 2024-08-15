@@ -35,6 +35,18 @@ class HelperService
             }
         ];
     }
+
+    public static function html($lang='uz', $description="description"): array
+    {
+        $description = ($lang == "uz") ? $description : "$description" .'_'. "$lang";
+        return [
+            'attribute' => $description,
+            'format' => 'raw',
+            'value' => function ($model) use ($description) {
+                return $model->$description;
+            }
+        ];
+    }
     public static function action(): array
     {
         return [
@@ -103,6 +115,12 @@ class HelperService
         return null;
     }
 
+    public static function viewModel($controller, $model, $id) {
+        return $controller->render('view', [
+            'model' => self::findModel($model, $id)
+        ]);
+    }
+
     public static function createModel($controller, $model) {
         if ($controller->request->isPost) {
             $fileService = new FileService($model);
@@ -121,18 +139,44 @@ class HelperService
         ]);
     }
 
-    public static function updateModel($controller, $model, $id, $attr = 'image', $type=0) {
+    public static function createChildModel($controller, $model, $parent, $parent_id) {
+        if ($controller->request->isPost) {
+            if ($model->load($controller->request->post())) {
+                $parent_foreign_key = $parent . '_id';
+                $parent_path = $parent . 's';
+                $model->$parent_foreign_key = $parent_id;
+                $model->save();
+                return $controller->redirect(["$parent_path/view", 'id' => $parent_id]);
+            }
+        } else {
+            $model->loadDefaultValues();
+        }
+
+        return $controller->render('create', [
+            'model' => $model,
+        ]);
+    }
+
+    public static function updateModel($controller, $model, $id, $attr = 'image', $type = 0) {
         $model = self::findModel($model, $id);
-        $fileService = new FileService($model);
-        $oldValue = $model->$attr;
+        $fileService = null;
+        $oldValue = null;
+        if ($model->hasAttribute($attr)) {
+            $fileService = new FileService($model);
+            $oldValue = $model->$attr;
+        }
+
         if ($type) {
             $attrRu = $attr . '_ru';
             $attrEn = $attr . '_en';
-            $oldValueRu = $model->$attrRu;
-            $oldValueEn = $model->$attrEn;
+            $oldValueRu = $model->hasAttribute($attrRu) ? $model->$attrRu : null;
+            $oldValueEn = $model->hasAttribute($attrEn) ? $model->$attrEn : null;
         }
+
         if ($controller->request->isPost && $model->load($controller->request->post())) {
-            $type ? $fileService->update($oldValue, $oldValueRu, $oldValueEn) : $fileService->update($oldValue);
+            if ($fileService) {
+                $type ? $fileService->update($oldValue, $oldValueRu, $oldValueEn) : $fileService->update($oldValue);
+            }
             if ($model->save()) {
                 return $controller->redirect(['view', 'id' => $model->id]);
             }
@@ -143,11 +187,20 @@ class HelperService
         ]);
     }
 
+
     public static function index($controller, $searchModel) {
         $dataProvider = $searchModel->search($controller->request->queryParams);
         return $controller->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    public static function deleteChild($controller, $model, $id, $parent) {
+        $m = self::findModel($model, $id);
+        self::findModel($model, $id)->delete();
+        $parent_foreign_key = $parent . '_id';
+        $parent_path = $parent . 's';
+        return $controller->redirect(["$parent_path/view", 'id' => $m->$parent_foreign_key]);
     }
 }

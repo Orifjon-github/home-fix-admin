@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Advantages;
+use app\models\ServiceAdvantages;
 
 /**
- * AdvantagesSearch represents the model behind the search form of `app\models\Advantages`.
+ * ServiceAdvantagesSearch represents the model behind the search form of `app\models\ServiceAdvantages`.
  */
-class AdvantagesSearch extends Advantages
+class ServiceAdvantagesSearch extends ServiceAdvantages
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class AdvantagesSearch extends Advantages
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['icon', 'title', 'title_uz', 'description', 'description_uz', 'enable', 'created_at', 'updated_at'], 'safe'],
+            [['id', 'service_id', 'price'], 'integer'],
+            [['title', 'title_ru', 'title_en', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class AdvantagesSearch extends Advantages
      */
     public function search($params)
     {
-        $query = Advantages::find();
+        $query = ServiceAdvantages::find();
 
         // add conditions that should always apply here
 
@@ -59,16 +59,15 @@ class AdvantagesSearch extends Advantages
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'service_id' => $this->service_id,
+            'price' => $this->price,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'icon', $this->icon])
-            ->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'title_uz', $this->title_uz])
-            ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'description_uz', $this->description_uz])
-            ->andFilterWhere(['like', 'enable', $this->enable]);
+        $query->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'title_ru', $this->title_ru])
+            ->andFilterWhere(['like', 'title_en', $this->title_en]);
 
         return $dataProvider;
     }

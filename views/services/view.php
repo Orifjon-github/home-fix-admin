@@ -1,9 +1,6 @@
 <?php
 
-use app\models\Services;
-use app\models\Socials;
 use app\services\HelperService;
-use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
@@ -12,7 +9,7 @@ use yii\widgets\DetailView;
 /** @var app\models\Services $model */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Услуги', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Services', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -35,29 +32,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attributes' => [
                     'id',
                     'title:ntext',
-                    'title_uz:ntext',
+                    'title_ru:ntext',
                     'title_en:ntext',
-                    [
-                        'attribute' => 'description',
-                        'format' => 'raw',
-                        'value' => function (Services $model) {
-                            return $model->description;
-                        }
-                    ],
-                    [
-                        'attribute' => 'description_uz',
-                        'format' => 'raw',
-                        'value' => function (Services $model) {
-                            return $model->description_uz;
-                        }
-                    ],
-                    [
-                        'attribute' => 'description_en',
-                        'format' => 'raw',
-                        'value' => function (Services $model) {
-                            return $model->description_en;
-                        }
-                    ],
+                    HelperService::html(),
+                    HelperService::html('ru'),
+                    HelperService::html('en'),
+                    'video_url:ntext',
+                    'video_url_ru:ntext',
+                    'video_url_en:ntext',
+                    HelperService::image('uz', 'video_bg'),
                     HelperService::image(),
                     HelperService::enable(),
                     'created_at',
@@ -66,23 +49,23 @@ $this->params['breadcrumbs'][] = $this->title;
             ]) ?>
         </div>
     </div>
-</div>
-
-<div class="service-images-index">
     <div class="card">
         <div class="card-body">
-            <h3>Изображений Услуга</h3>
-            <p><?= Html::a('Добавить новое', ['service-images/create', 'id' => $model->id], ['class' => 'btn btn-success']) ?></p>
-
-            <?= GridView::widget([
-                'dataProvider' => $dataProviderImages,
+            <h3>Sub Services</h3>
+            <p><?= Html::a('Добавить новое', ['service-advantages/create', 'id' => $model->id], ['class' => 'btn btn-success']) ?></p>
+            <?= /** @var mixed $dataProvider */
+            /** @var mixed $searchModel */
+            GridView::widget([
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
 
                     'id',
-                    HelperService::image(),
-                    HelperService::enable(),
-                    HelperService::actionChild('service-images')
+                    'title',
+                    'price',
+                    'created_at',
+                    HelperService::actionChild('service-advantages')
                 ],
             ]); ?>
         </div>

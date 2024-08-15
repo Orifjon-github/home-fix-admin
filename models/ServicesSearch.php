@@ -18,7 +18,7 @@ class ServicesSearch extends Services
     {
         return [
             [['id'], 'integer'],
-            [['title', 'title_uz', 'title_en','description', 'description_uz', 'description_en', 'image', 'enable', 'created_at', 'updated_at'], 'safe'],
+            [['title', 'title_ru', 'title_en', 'description', 'description_ru', 'description_en', 'video_url', 'video_url_ru', 'video_url_en', 'video_bg', 'image', 'enable', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -64,9 +64,15 @@ class ServicesSearch extends Services
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'title_uz', $this->title_uz])
-            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'title_ru', $this->title_ru])
             ->andFilterWhere(['like', 'title_en', $this->title_en])
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'description_ru', $this->description_ru])
+            ->andFilterWhere(['like', 'description_en', $this->description_en])
+            ->andFilterWhere(['like', 'video_url', $this->video_url])
+            ->andFilterWhere(['like', 'video_url_ru', $this->video_url_ru])
+            ->andFilterWhere(['like', 'video_url_en', $this->video_url_en])
+            ->andFilterWhere(['like', 'video_bg', $this->video_bg])
             ->andFilterWhere(['like', 'image', $this->image])
             ->andFilterWhere(['like', 'enable', $this->enable]);
 

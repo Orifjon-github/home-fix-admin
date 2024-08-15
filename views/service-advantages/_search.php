@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var app\models\ServicesSearch $model */
+/** @var app\models\ServiceAdvantagesSearch $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="services-search">
+<div class="service-advantages-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -17,29 +17,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
+    <?= $form->field($model, 'service_id') ?>
+
     <?= $form->field($model, 'title') ?>
 
     <?= $form->field($model, 'title_ru') ?>
 
     <?= $form->field($model, 'title_en') ?>
 
-    <?= $form->field($model, 'description') ?>
-
-    <?php // echo $form->field($model, 'description_ru') ?>
-
-    <?php // echo $form->field($model, 'description_en') ?>
-
-    <?php // echo $form->field($model, 'video_url') ?>
-
-    <?php // echo $form->field($model, 'video_url_ru') ?>
-
-    <?php // echo $form->field($model, 'video_url_en') ?>
-
-    <?php // echo $form->field($model, 'video_bg') ?>
-
-    <?php // echo $form->field($model, 'image') ?>
-
-    <?php // echo $form->field($model, 'enable') ?>
+    <?php // echo $form->field($model, 'price') ?>
 
     <?php // echo $form->field($model, 'created_at') ?>
 

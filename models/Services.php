@@ -9,16 +9,21 @@ use Yii;
  *
  * @property int $id
  * @property string $title
- * @property string|null $title_uz
+ * @property string|null $title_ru
  * @property string|null $title_en
  * @property string|null $description
- * @property string|null $description_uz
+ * @property string|null $description_ru
  * @property string|null $description_en
+ * @property string $video_url
+ * @property string|null $video_url_ru
+ * @property string|null $video_url_en
+ * @property string|null $video_bg
  * @property string|null $image
  * @property string $enable
  * @property string|null $created_at
  * @property string|null $updated_at
  *
+ * @property ServiceAdvantages[] $serviceAdvantages
  * @property ServiceImages[] $serviceImages
  */
 class Services extends \yii\db\ActiveRecord
@@ -45,8 +50,8 @@ class Services extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title'], 'required'],
-            [['title', 'title_uz', 'title_en', 'description', 'description_uz', 'description_en', 'image', 'enable'], 'string'],
+            [['title', 'video_url'], 'required'],
+            [['title', 'title_ru', 'title_en', 'description', 'description_ru', 'description_en', 'video_url', 'video_url_ru', 'video_url_en', 'video_bg', 'image', 'enable'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -59,16 +64,30 @@ class Services extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'title' => 'Title',
-            'title_uz' => 'Title Uz',
+            'title_ru' => 'Title Ru',
             'title_en' => 'Title En',
             'description' => 'Description',
-            'description_uz' => 'Description Uz',
+            'description_ru' => 'Description Ru',
             'description_en' => 'Description En',
+            'video_url' => 'Video Url',
+            'video_url_ru' => 'Video Url Ru',
+            'video_url_en' => 'Video Url En',
+            'video_bg' => 'Video Bg',
             'image' => 'Image',
-            'enable' => 'Включить/Отключить',
-            'created_at' => 'Создан',
-            'updated_at' => 'Обновлен',
+            'enable' => 'Enable',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
         ];
+    }
+
+    /**
+     * Gets query for [[ServiceAdvantages]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getServiceAdvantages()
+    {
+        return $this->hasMany(ServiceAdvantages::class, ['service_id' => 'id']);
     }
 
     /**

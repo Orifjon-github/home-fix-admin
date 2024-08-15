@@ -1,7 +1,6 @@
 <?php
 
 use app\models\Services;
-use app\models\Socials;
 use app\services\HelperService;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -12,7 +11,7 @@ use yii\grid\GridView;
 /** @var app\models\ServicesSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Услуги';
+$this->title = 'Services';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="services-index">
@@ -22,8 +21,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= Html::a('Create Services', ['create'], ['class' => 'btn btn-success']) ?>
             </p>
 
-            <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
@@ -31,15 +28,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     ['class' => 'yii\grid\SerialColumn'],
 
                     'id',
-                    'title:ntext',
-                    [
-                        'attribute' => 'description',
-                        'format' => 'raw',
-                        'value' => function (Services $model) {
-                            return $model->description;
-                        }
-                    ],
+                    'title',
                     HelperService::image(),
+                    HelperService::image('uz', 'video_bg'),
+                    'video_url',
                     HelperService::enable(),
                     HelperService::action()
                 ],
