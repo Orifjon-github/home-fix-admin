@@ -10,31 +10,28 @@ use yii\grid\GridView;
 /** @var app\models\ApplicationsSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Applications for Consultation';
+$this->title = 'Applications for Career';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="applications-index">
     <div class="card">
         <div class="card-body">
+
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                    ['class' => 'yii\grid\SerialColumn', 'template' => '{view}'],
 
                     'id',
                     'name',
                     'phone',
-                    'email:email',
-                    'description:ntext',
-                    [
-                        'class' => ActionColumn::className(),
-                        'urlCreator' => function ($action, Applications $model, $key, $index, $column) {
-                            return Url::toRoute([$action, 'id' => $model->id]);
-                        }
-                    ],
+                    'message',
+                    'resume',
+                    'created_at',
                 ],
             ]); ?>
+
         </div>
     </div>
 </div>

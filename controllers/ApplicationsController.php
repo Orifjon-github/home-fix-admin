@@ -17,175 +17,26 @@ use yii\web\Response;
  */
 class ApplicationsController extends Controller
 {
-    /**
-     * @inheritDoc
-     */
-    public function behaviors()
+    public function actionIndex(): string
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
-                ],
-            ]
-        );
+        return HelperService::index($this, new ApplicationsSearch());
     }
 
-    /**
-     * Lists all Applications models.
-     *
-     * @return string
-     */
-    public function actionIndex()
+    public function actionContacts()
     {
         $searchModel = new ApplicationsSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    public function actionOrders()
-    {
-        $searchModel = new ApplicationsSearch();
-        $searchModel->type = 'order';
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
-        return $this->render('orders', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        $searchModel->type = 'contact';
+        return HelperService::index($this, $searchModel, 'contact');
     }
 
     public function actionPartners()
     {
         $searchModel = new ApplicationsSearch();
-        $searchModel->type = 'partner';
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
-        return $this->render('partners', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        $searchModel->type = 'career';
+        return HelperService::index($this, $searchModel, 'career');
     }
-
-    public function actionConsultations()
+    public function actionView($id): string
     {
-        $searchModel = new ApplicationsSearch();
-        $searchModel->type = 'consultation';
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
-        return $this->render('consultations', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Applications model.
-     * @param string $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        $model = $this->findModel($id);
-        $dataProvider = null;
-        if ($model->type == 'order') {
-            $orders = unserialize($model->description);
-            $dataProvider = new ArrayDataProvider([
-                'allModels' => $orders,
-                'pagination' => false, // You can enable pagination if needed
-            ]);
-        }
-        return $this->render('view', [
-            'model' => $model,
-            'orders' => $dataProvider
-        ]);
-    }
-
-    /**
-     * Creates a new Applications model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
-    public function actionCreate()
-    {
-        $model = new Applications();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Updates an existing Applications model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing Applications model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    public function actionEnable($id): Response
-    {
-        $model = $this->findModel($id);
-        HelperService::changeEnableDisable($model);
-        return $this->redirect('index');
-    }
-
-    /**
-     * Finds the Applications model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id ID
-     * @return Applications the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Applications::findOne(['id' => $id])) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
+        return HelperService::viewModel($this, new Applications(), $id);
     }
 }

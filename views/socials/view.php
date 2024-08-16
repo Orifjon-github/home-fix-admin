@@ -32,8 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attributes' => [
                     'id',
                     'name',
-                    'link:ntext',
-                    HelperService::image('ru', 'icon'),
+                    'link',
+                    HelperService::image('uz', 'icon'),
                     HelperService::enable(),
                     'created_at',
                     'updated_at',

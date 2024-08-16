@@ -25,17 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'id',
                     'name',
                     'phone',
-                    'email:email',
-                    [
-                        'attribute' => 'description',
-                        'value' => function (Applications $model) {
-                            if ($model->type == 'order') {
-                                return '';
-//                        return json_encode(unserialize($model->description), JSON_PRETTY_PRINT);
-                            }
-                            return $model->description;
-                        }
-                    ],
+                    'message',
                     [
                         'attribute' => 'type',
                         'value' => function (Applications $model) {
@@ -43,14 +33,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                         'filter' => Applications::AppTypes()
                     ],
-                    //'created_at',
-                    //'updated_at',
+                    'created_at',
                     [
-                        'class' => ActionColumn::className(),
-                        'urlCreator' => function ($action, Applications $model, $key, $index, $column) {
-                            return Url::toRoute([$action, 'id' => $model->id]);
-                        }
-                    ],
+                        'class' => ActionColumn::class,
+                        'template' => '{view}',
+                    ]
                 ],
             ]); ?>
 

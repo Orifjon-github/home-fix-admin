@@ -188,9 +188,9 @@ class HelperService
     }
 
 
-    public static function index($controller, $searchModel) {
+    public static function index($controller, $searchModel, $page='index') {
         $dataProvider = $searchModel->search($controller->request->queryParams);
-        return $controller->render('index', [
+        return $controller->render($page, [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

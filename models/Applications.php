@@ -5,76 +5,59 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "applications".
- *
- * @property int $id
- * @property string $name
- * @property string $phone
- * @property string|null $email
- * @property string $description
- * @property string $type
- * @property string $address
- * @property string|null $created_at
- * @property string|null $updated_at
+ * @property mixed|null $id
+ * @property mixed|null $type
+ * @property mixed|null $created_at
+ * @property mixed|null $updated_at
+ * @property mixed|null $name
+ * @property mixed|null $phone
+ * @property mixed|null $message
  */
 class Applications extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'applications';
     }
 
-    /**
-     * @return \yii\db\Connection the database connection used by this AR class.
-     */
     public static function getDb()
     {
         return Yii::$app->get('db2');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['name', 'phone'], 'required'],
-            [['description', 'type', 'address'], 'string'],
+            [['message', 'type'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
-            [['name', 'phone', 'email'], 'string', 'max' => 255],
+            [['name', 'phone'], 'string', 'max' => 255],
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
             'name' => 'Name',
             'phone' => 'Phone',
-            'email' => 'Email',
-            'address' => 'Address',
-            'description' => 'Description',
+            'message' => 'Message',
             'type' => 'Type',
+            'resume' => 'Resume',
             'created_at' => 'Создан',
             'updated_at' => 'Обновлен',
         ];
     }
 
-    public static function AppTypes($type=null) {
+    public static function AppTypes($type=null): array|string
+    {
         $list = [
-            'partner' => 'Для партнера',
-            'consultation' => 'Для консультации',
-            'order' => 'Заказ'
+            'contact' => 'Contact Application',
+            'career' => 'Career Application',
         ];
         if ($type==null) {
             return $list;
         }
-        return $list[$type];
+        return $list[$type] ?? $type;
     }
 }

@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var app\models\ApplicationsSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Applications for Partner';
+$this->title = 'Applications for Career';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="applications-index">
@@ -21,22 +21,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                    ['class' => 'yii\grid\SerialColumn', 'template' => '{view}'],
 
                     'id',
                     'name',
                     'phone',
-                    'email:email',
-                    'description:ntext',
-                    //'type',
-                    //'created_at',
-                    //'updated_at',
-                    [
-                        'class' => ActionColumn::className(),
-                        'urlCreator' => function ($action, Applications $model, $key, $index, $column) {
-                            return Url::toRoute([$action, 'id' => $model->id]);
-                        }
-                    ],
+                    'message',
+                    'created_at',
                 ],
             ]); ?>
 

@@ -21,8 +21,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= Html::a('Добавить новое', ['create'], ['class' => 'btn btn-success']) ?>
             </p>
 
-            <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
@@ -32,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'id',
                     'name',
                     'link:ntext',
-                    HelperService::image('ru', 'icon'),
+                    HelperService::image('uz', 'icon'),
                     HelperService::enable(),
                     HelperService::action()
                 ],

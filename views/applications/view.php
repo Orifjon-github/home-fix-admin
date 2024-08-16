@@ -33,23 +33,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'id',
                     'name',
                     'phone',
-                    'email:email',
-                    'address',
-                    [
-                        'attribute' => 'description',
-                        'value' => function (Applications $model) {
-                            if ($model->type == 'order') {
-                                return '';
-                            }
-                            return $model->description;
-                        }
-                    ],
+                    'message',
                     [
                         'attribute' => 'type',
                         'value' => function (Applications $model) {
                             return Applications::AppTypes($model->type);
                         }
                     ],
+                    'resume',
                     'created_at',
                     'updated_at',
                 ],
@@ -57,17 +48,3 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
-<?php if ($orders) { ?>
-    <div class="card">
-        <div class="card-body">
-            <?= GridView::widget([
-            'dataProvider' => $orders,
-            'columns' => [
-            'id',
-            'name',
-            'count',
-            ],
-            ]); ?>
-        </div>
-    </div>
-<?php }
