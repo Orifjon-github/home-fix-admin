@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn', 'template' => '{view}'],
+                    ['class' => 'yii\grid\SerialColumn'],
 
                     'id',
                     'name',
@@ -29,6 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     'message',
                     'resume',
                     'created_at',
+                    [
+                        'class' => ActionColumn::class,
+                        'template' => '{view}',
+                    ]
                 ],
             ]); ?>
 
