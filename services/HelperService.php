@@ -121,11 +121,11 @@ class HelperService
         ]);
     }
 
-    public static function createModel($controller, $model) {
+    public static function createModel($controller, $model, $attr='image') {
         if ($controller->request->isPost) {
             $fileService = new FileService($model);
             if ($model->load($controller->request->post())) {
-                $fileService->create();
+                $fileService->create($attr);
                 if ($model->save()) {
                     return $controller->redirect(['view', 'id' => $model->id]);
                 }
@@ -175,7 +175,7 @@ class HelperService
 
         if ($controller->request->isPost && $model->load($controller->request->post())) {
             if ($fileService) {
-                $type ? $fileService->update($oldValue, $oldValueRu, $oldValueEn) : $fileService->update($oldValue);
+                $type ? $fileService->update($oldValue, $oldValueRu, $oldValueEn) : $fileService->update($oldValue, attr: $attr);
             }
             if ($model->save()) {
                 return $controller->redirect(['view', 'id' => $model->id]);

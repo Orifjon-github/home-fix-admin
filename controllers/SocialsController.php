@@ -17,91 +17,37 @@ use yii\web\UploadedFile;
 
 class SocialsController extends Controller
 {
-    public function behaviors(): array
-    {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
-                ],
-            ]
-        );
-    }
-
     public function actionIndex(): string
     {
-        $searchModel = new SocialsSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        return HelperService::index($this, new SocialsSearch());
     }
 
     public function actionView($id): string
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        return HelperService::viewModel($this, new Socials(), $id);
     }
 
     public function actionCreate(): Response|string
     {
-        $model = new Socials();
-        $fileService = new FileService($model);
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                $fileService->create('icon');
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        return HelperService::createModel($this, new Socials(), 'icon');
     }
 
     public function actionUpdate($id): Response|string
     {
-        $model = $this->findModel($id);
-        $fileService = new FileService($model);
-        $oldValue = $model->icon;
-        if ($this->request->isPost && $model->load($this->request->post())) {
-            $fileService->update($oldValue, attr: 'icon');
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        return HelperService::updateModel($this, new Socials(), $id, 'icon');
     }
 
     public function actionDelete($id): Response
     {
-        $this->findModel($id)->delete();
+        HelperService::findModel(new Socials(), $id)->delete();
 
         return $this->redirect(['index']);
     }
 
     public function actionEnable($id): Response
     {
-        $model = $this->findModel($id);
+        $model = HelperService::findModel(new Socials(), $id);
         HelperService::changeEnableDisable($model);
         return $this->redirect('index');
-    }
-
-    protected function findModel($id): bool|Socials|null
-    {
-        if (($model = Socials::findOne(['id' => $id])) !== null) {
-            return $model;
-        }
-        return false;
     }
 }
