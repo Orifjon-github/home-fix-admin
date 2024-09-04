@@ -18,7 +18,7 @@ class ServicesSearch extends Services
     {
         return [
             [['id'], 'integer'],
-            [['title', 'title_ru', 'title_en', 'description', 'description_ru', 'description_en', 'video_url', 'video_url_ru', 'video_url_en', 'video_bg', 'image', 'enable', 'created_at', 'updated_at'], 'safe'],
+            [['title', 'title_ru', 'title_en', 'description', 'description_ru', 'description_en', 'icon', 'video_url', 'video_url_ru', 'video_url_en', 'video_bg', 'image', 'enable', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 

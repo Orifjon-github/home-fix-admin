@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\ServiceAdvantagesSearch;
 use app\models\Services;
 use app\models\ServicesSearch;
+use app\services\FileService;
 use app\services\HelperService;
 use yii\web\Controller;
 use yii\web\Response;
@@ -31,12 +32,46 @@ class ServicesController extends Controller
 
     public function actionCreate()
     {
-        return HelperService::createModel($this, new Services());
+        $model = new Services();
+        if ($this->request->isPost) {
+            $fileService = new FileService($model);
+            if ($model->load($this->request->post())) {
+                $fileService->create('image');
+                $fileService->create('video_bg');
+                $fileService->create('icon');
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
+        } else {
+            $model->loadDefaultValues();
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     public function actionUpdate($id)
     {
-        return HelperService::updateModel($this, new Services(), $id);
+        $model = HelperService::findModel(new Services(), $id);
+        $fileService = new FileService($model);
+        $oldValue = $model->image;
+        $oldValueBg = $model->video_bg;
+        $oldValueIcon = $model->icon;
+
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $fileService->update($oldValue);
+            $fileService->update($oldValueBg, attr: 'video_bg');
+            $fileService->update($oldValueIcon, attr: 'icon');
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     public function actionDelete($id): Response

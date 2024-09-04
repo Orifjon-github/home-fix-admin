@@ -19,12 +19,12 @@ use Yii;
  * @property string|null $video_url_en
  * @property string|null $video_bg
  * @property string|null $image
+ * @property string|null $icon
  * @property string $enable
  * @property string|null $created_at
  * @property string|null $updated_at
  *
  * @property ServiceAdvantages[] $serviceAdvantages
- * @property ServiceImages[] $serviceImages
  */
 class Services extends \yii\db\ActiveRecord
 {
@@ -51,7 +51,7 @@ class Services extends \yii\db\ActiveRecord
     {
         return [
             [['title', 'video_url'], 'required'],
-            [['title', 'title_ru', 'title_en', 'description', 'description_ru', 'description_en', 'video_url', 'video_url_ru', 'video_url_en', 'video_bg', 'image', 'enable'], 'string'],
+            [['title', 'title_ru', 'title_en', 'description', 'description_ru', 'icon', 'description_en', 'video_url', 'video_url_ru', 'video_url_en', 'video_bg', 'image', 'enable'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -74,29 +74,16 @@ class Services extends \yii\db\ActiveRecord
             'video_url_en' => 'Video Url En',
             'video_bg' => 'Video Bg',
             'image' => 'Image',
+            'icon' => 'Icon',
             'enable' => 'Enable',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
     }
 
-    /**
-     * Gets query for [[ServiceAdvantages]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
     public function getServiceAdvantages()
     {
         return $this->hasMany(ServiceAdvantages::class, ['service_id' => 'id']);
     }
 
-    /**
-     * Gets query for [[ServiceImages]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getServiceImages()
-    {
-        return $this->hasMany(ServiceImages::class, ['service_id' => 'id']);
-    }
 }

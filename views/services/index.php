@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'title',
                     HelperService::image(),
                     HelperService::image('uz', 'video_bg'),
+                    HelperService::image('uz', 'icon'),
                     'video_url',
                     HelperService::enable(),
                     HelperService::action()
