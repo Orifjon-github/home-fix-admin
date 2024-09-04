@@ -50,6 +50,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'video_bg')->fileInput(['class' => 'form-control', 'id' => 'formFile']) ?>
 
             <?= $form->field($model, 'image')->fileInput(['class' => 'form-control', 'id' => 'formFile']) ?>
+            <?= $form->field($model, 'icon')->fileInput(['class' => 'form-control', 'id' => 'formFile']) ?>
 
             <div class="form-group">
                 <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
