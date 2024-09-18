@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'resume',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return Html::a('Download File', ['https://api.homefixuz.com' . $model->resume]);
+                            return Html::a('Download File', 'https://api.homefixuz.com' . $model->resume, ['target' => '_blank']);
                         },
                     ],
                     'created_at',
