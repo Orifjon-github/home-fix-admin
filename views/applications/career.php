@@ -27,7 +27,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     'name',
                     'phone',
                     'message',
-                    'resume',
+                    [
+                        'attribute' => 'resume',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return Html::a('Download File', ['https://api.homefixuz.com' . $model->resume]);
+                        },
+                    ],
                     'created_at',
                     [
                         'class' => ActionColumn::class,
