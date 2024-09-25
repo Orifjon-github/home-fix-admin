@@ -15,26 +15,28 @@ $this->title = 'Works';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="works-index">
+    <div class="card">
+        <div class="card-body">
+            <p>
+                <?= Html::a('Create Works', ['create'], ['class' => 'btn btn-success']) ?>
+            </p>
 
-    <p>
-        <?= Html::a('Create Works', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+                    'id',
+                    'title',
+                    'description',
+                    HelperService::image(),
+                    HelperService::enable(),
+                    'created_at',
+                    HelperService::action(),
+                ],
+            ]); ?>
 
-            'id',
-            'title',
-            'description',
-            HelperService::image(),
-            HelperService::enable(),
-            'created_at',
-            HelperService::action(),
-        ],
-    ]); ?>
-
-
+        </div>
+    </div>
 </div>
