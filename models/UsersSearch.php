@@ -8,6 +8,7 @@ use app\models\Users;
 
 /**
  * UsersSearch represents the model behind the search form of `app\models\Users`.
+ * @property mixed|null $username
  */
 class UsersSearch extends Users
 {
@@ -18,7 +19,7 @@ class UsersSearch extends Users
     {
         return [
             [['id'], 'integer'],
-            [['name', 'email', 'phone', 'image', 'email_verified_at', 'password', 'remember_token', 'created_at', 'updated_at'], 'safe'],
+            [['name', 'username', 'image', 'email_verified_at', 'password', 'remember_token', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -65,8 +66,7 @@ class UsersSearch extends Users
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'phone', $this->phone])
+            ->andFilterWhere(['like', 'username', $this->username])
             ->andFilterWhere(['like', 'image', $this->image])
             ->andFilterWhere(['like', 'password', $this->password])
             ->andFilterWhere(['like', 'remember_token', $this->remember_token]);

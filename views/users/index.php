@@ -25,8 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     'id',
                     'name',
-                    'email:email',
-                    'phone',
+                    'username',
                     HelperService::image(),
                     'created_at',
                     [

@@ -30,9 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attributes' => [
                     'id',
                     'name',
-                    'email:email',
-                    'phone',
-                    'image',
+                    'username',
+                    \app\services\HelperService::image(),
                     'created_at',
                     'updated_at',
                 ],
