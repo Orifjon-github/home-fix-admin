@@ -29,6 +29,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'role',
                         'value' => function ($model) {
+                            if (!$model->role) {
+                                return 'Role berilmagan';
+                            }
                             return BotUsers::roles($model->role);
                         },
                         'filter' => BotUsers::roles(),
