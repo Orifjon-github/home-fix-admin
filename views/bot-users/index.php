@@ -29,8 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'role',
                         'value' => function ($model) {
-                            if (!$model->role) {
-                                return 'Role berilmagan';
+                            if (empty($model->role)) {
+                                return '⚠️ ROLE BERILMAGAN ⚠️';
                             }
                             return BotUsers::roles($model->role);
                         },

@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
 
             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-            <?= $form->field($model, 'role')->dropDownList(BotUsers::roles()) ?>
+            <?= $form->field($model, 'role')->dropDownList(BotUsers::roles(), ['prompt' => '']) ?>
 
             <div class="form-group">
                 <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
