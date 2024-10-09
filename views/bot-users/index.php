@@ -17,9 +17,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="bot-users-index">
     <div class="card">
         <div class="card-body">
-            <p>
-                <?= Html::a('Create Bot Users', ['create'], ['class' => 'btn btn-success']) ?>
-            </p>
 
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
@@ -29,9 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     'id',
                     'name',
-                    'role',
                     [
-                        'attribute' => 'status',
+                        'attribute' => 'role',
                         'value' => function ($model) {
                             return BotUsers::roles($model->role);
                         },

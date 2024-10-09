@@ -50,6 +50,7 @@ class BotUsersSearch extends BotUsers
             ->andFilterWhere(['like', 'status', $this->status])
             ->andFilterWhere(['like', 'object_id', $this->object_id])
             ->andFilterWhere(['like', 'remember_token', $this->remember_token]);
+
         return $dataProvider;
     }
 }
