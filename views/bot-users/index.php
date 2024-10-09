@@ -42,7 +42,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     'language',
                     'status',
                     'created_at',
-                    HelperService::action()
+                    [
+                        'class' => ActionColumn::class,
+                        'template' => '{view} {update} {delete} {enable}', // specify the actions you want to display
+                    ]
                 ],
             ]); ?>
         </div>
