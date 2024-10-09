@@ -37,14 +37,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'filter' => BotUsers::roles(),
                     ],
                     'phone',
-                    'chat_id',
                     'language',
                     'status',
                     'created_at',
-                    [
-                        'class' => ActionColumn::class,
-                        'template' => '{view} {update} {delete} {enable}', // specify the actions you want to display
-                    ]
+                    HelperService::action()
                 ],
             ]); ?>
         </div>
