@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
@@ -14,7 +15,13 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="orders-view">
     <div class="card">
         <div class="card-body">
-            <?= Html::a('<i class="fa fa-refresh"></i> Activate', Yii::$app->urlManager->createUrl('/orders/activate?id=') . $model->id, ['class' => 'btn btn-warning', 'style' => 'display:inline-block;mb:10px']) ?>
+            <p>
+                <?php
+                if ($model->status == "pending") {
+                    echo Html::a('ACTIVATE', Url::to(['orders/activate', 'id' => $model->id]), ['class' => 'btn btn-success']);
+                }
+                ?>
+            </p>
 <!--            <p>-->
 <!--                --><?php //= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
 <!--                --><?php //= Html::a('Delete', ['delete', 'id' => $model->id], [

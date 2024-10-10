@@ -41,8 +41,9 @@ class OrdersController extends Controller
         return $this->redirect(['index']);
     }
 
-    public function actionActivate($id)
+    public function actionActivate()
     {
+        $id = $this->request->get('id');
         $model = HelperService::findModel(new Orders(), $id);
         $model->status = 'active';
         $model->save();
