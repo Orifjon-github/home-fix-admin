@@ -46,7 +46,7 @@ class OrdersController extends Controller
         $id = $this->request->get('id');
         $model = HelperService::findModel(new Orders(), $id);
         $model->status = 'active';
-        $model->save();
+        $model->save(false);
         return $this->redirect(['view', 'id' => $id]);
     }
 }
