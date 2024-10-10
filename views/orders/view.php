@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="orders-view">
     <div class="card">
         <div class="card-body">
-            <?= Html::a('<i class="fa fa-refresh"></i> Activate', Yii::$app->urlManager->createUrl('/orders/activate?id=') . $model->id, ['class' => 'btn btn-warning', 'style' => 'display:inline-block']) ?>
+            <?= Html::a('<i class="fa fa-refresh"></i> Activate', Yii::$app->urlManager->createUrl('/orders/activate?id=') . $model->id, ['class' => 'btn btn-warning', 'style' => 'display:inline-block;mb:10px']) ?>
 <!--            <p>-->
 <!--                --><?php //= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
 <!--                --><?php //= Html::a('Delete', ['delete', 'id' => $model->id], [
