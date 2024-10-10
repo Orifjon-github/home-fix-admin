@@ -41,12 +41,12 @@ class OrdersController extends Controller
         return $this->redirect(['index']);
     }
 
-    public function actionActivate()
+    public function actionActivate(): Response
     {
         $id = $this->request->get('id');
         $model = HelperService::findModel(new Orders(), $id);
         $model->status = 'active';
         $model->save();
-        return HelperService::viewModel($this, new Orders(), $id);
+        return $this->redirect(['view', 'id' => $id]);
     }
 }
