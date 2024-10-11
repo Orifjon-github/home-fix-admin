@@ -16,9 +16,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="orders-index">
     <div class="card">
         <div class="card-body">
-<!--            <p>-->
-<!--                --><?php //= Html::a('Create Orders', ['create'], ['class' => 'btn btn-success']) ?>
-<!--            </p>-->
+            <!--            <p>-->
+            <!--                --><?php //= Html::a('Create Orders', ['create'], ['class' => 'btn btn-success']) ?>
+            <!--            </p>-->
 
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
@@ -28,7 +28,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     'id',
                     'user_id',
-                    'branch_id',
+                    [
+                        'attribute' => 'branch_id',
+                        'value' => function ($model) {
+                            return $model->branch->name ?? $model->branch_id;
+                        }
+                    ],
                     'status',
                     'created_at',
                     [

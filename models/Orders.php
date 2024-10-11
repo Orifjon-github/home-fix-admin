@@ -86,4 +86,9 @@ class Orders extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Users::class, ['id' => 'user_id']);
     }
+
+    public function getBranch()
+    {
+        return $this->hasOne(UserHomes::class, ['id' => 'branch_id']);
+    }
 }

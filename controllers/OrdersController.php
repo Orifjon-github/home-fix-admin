@@ -4,7 +4,9 @@ namespace app\controllers;
 
 use app\models\Orders;
 use app\models\OrdersSearch;
+use app\models\TasksSearch;
 use app\services\HelperService;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -20,9 +22,17 @@ class OrdersController extends Controller
         return HelperService::index($this, new OrdersSearch());
     }
 
-    public function actionView($id)
+    public function actionView($id): string
     {
-        return HelperService::viewModel($this, new Orders(), $id);
+        $searchModel = new TasksSearch();
+        $searchModel->order_id = $id;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('view', [
+            'model' => HelperService::findModel(new Orders(), $id),
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel
+        ]);
     }
 
     public function actionCreate(): Response|string
@@ -47,6 +57,7 @@ class OrdersController extends Controller
         $model = HelperService::findModel(new Orders(), $id);
         $model->status = 'active';
         $model->save(false);
+        Yii::$app->session->setFlash('success', 'Order activated');
         return $this->redirect(['view', 'id' => $id]);
     }
 }

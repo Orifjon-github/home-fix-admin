@@ -203,4 +203,11 @@ class HelperService
         $parent_path = $parent . 's';
         return $controller->redirect(["$parent_path/view", 'id' => $m->$parent_foreign_key]);
     }
+
+    public static function makeGridView()
+    {
+        return "
+            
+        ";
+    }
 }

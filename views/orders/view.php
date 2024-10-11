@@ -1,5 +1,7 @@
 <?php
 
+use app\services\HelperService;
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
@@ -38,12 +40,39 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attributes' => [
                     'id',
                     'user_id',
-                    'branch_id',
+                    [
+                        'attribute' => 'branch_id',
+                        'value' => function ($model) {
+                            return $model->branch->name ?? $model->branch_id;
+                        }
+                    ],
                     'status',
                     'created_at',
                     'updated_at',
                 ],
             ]) ?>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h3>Tasks</h3>
+            <p><?= Html::a('Добавить новое', ['tasks/create', 'id' => $model->id], ['class' => 'btn btn-success']) ?></p>
+            <?= /** @var mixed $dataProvider */
+            /** @var mixed $searchModel */
+            GridView::widget([
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+                    'id',
+                    'name',
+                    'description',
+                    'service_type',
+                    'status',
+                    HelperService::actionChild('tasks')
+                ],
+            ]); ?>
         </div>
     </div>
 </div>
