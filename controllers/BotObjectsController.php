@@ -5,6 +5,8 @@ namespace app\controllers;
 use app\models\Partners;
 use app\models\PartnersSearch;
 use app\services\HelperService;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Reader\Html;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
@@ -52,6 +54,25 @@ class BotObjectsController extends Controller
 
     public function actionExcel()
     {
+
+        $htmlContent = file_get_contents(Yii::getAlias('@webroot/table.html'));
+
+        $spreadsheet = new Spreadsheet();
+
+        $reader = new Html();
+        $reader->loadFromString($htmlContent, $spreadsheet);
+
+
+        $directory = Yii::getAlias('@webroot/uploads/reports');
+
+        $fileName = 'Coffee_Issimo_' . time() . '.xlsx';
+        $filePath = $directory . '/' . $fileName;
+
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save($filePath);
+
+        return Yii::$app->response->sendFile($filePath)->send();
+
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
