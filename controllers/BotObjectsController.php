@@ -57,6 +57,21 @@ class BotObjectsController extends Controller
 
         $htmlContent = file_get_contents(Yii::getAlias('@webroot/table.html'));
 
+        $htmlContent = preg_replace_callback(
+            '/<img[^>]+src="([^">]+)"[^>]*>/i',
+            function ($matches) {
+                $imagePath = Yii::getAlias('@webroot/') . $matches[1];
+                // Rasm mavjudligini tekshirish
+                if (!file_exists($imagePath)) {
+                    // Agar rasm mavjud bo'lmasa, "Rasm topilmadi" matnini qo'shish
+                    return '<div>Rasm topilmadi</div>';
+                }
+                // Agar rasm mavjud bo'lsa, asl img tegi
+                return $matches[0];
+            },
+            $htmlContent
+        );
+
         $spreadsheet = new Spreadsheet();
 
         $reader = new Html();
