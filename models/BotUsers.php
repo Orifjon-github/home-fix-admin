@@ -56,12 +56,12 @@ class BotUsers extends ActiveRecord
             'phone' => 'Phone',
             'chat_id' => 'Chat ID',
             'language' => 'Language',
-            'Current Action' => 'Step',
+            'step' => 'Current Action',
             'status' => 'Status',
             'object_id' => 'Object ID',
             'remember_token' => 'Remember Token',
             'created_at' => 'Created At',
-            'Last Action Time' => 'Updated At',
+            'updated_at' => 'Last Action Time',
         ];
     }
 
