@@ -22,7 +22,7 @@ class UsersController extends Controller
     {
         $searchModel = new UsersSearch();
         $searchModel->role = 'corporate';
-        return HelperService::index($this, $searchModel);
+        return HelperService::index($this, $searchModel, 'corporate');
     }
 
     public function actionView($id)
