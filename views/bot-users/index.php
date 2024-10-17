@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                         'filter' => BotUsers::roles(),
                     ],
+                    'step',
                     'phone',
                     'status',
                     HelperService::action()
