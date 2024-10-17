@@ -5,9 +5,7 @@ namespace app\controllers;
 use app\models\Users;
 use app\models\UsersSearch;
 use app\services\HelperService;
-use Illuminate\Support\Facades\Hash;
 use Yii;
-use yii\db\Exception;
 use yii\web\Controller;
 use yii\web\Response;
 
@@ -15,12 +13,29 @@ class UsersController extends Controller
 {
     public function actionIndex()
     {
-        return HelperService::index($this, new UsersSearch());
+        $searchModel = new UsersSearch();
+        $searchModel->role = 'individual';
+        return HelperService::index($this, $searchModel);
+    }
+
+    public function actionCorporate()
+    {
+        $searchModel = new UsersSearch();
+        $searchModel->role = 'corporate';
+        return HelperService::index($this, $searchModel);
     }
 
     public function actionView($id)
     {
         return HelperService::viewModel($this, new Users(), $id);
+    }
+
+    public function actionCreate()
+    {
+        Yii::$app->session->setFlash('error', 'Technical work');
+        $searchModel = new UsersSearch();
+        $searchModel->role = 'corporate';
+        return HelperService::index($this, $searchModel);
     }
 
     public function actionDelete($id): Response
@@ -29,9 +44,6 @@ class UsersController extends Controller
         return $this->redirect(['index']);
     }
 
-    /**
-     * @throws Exception
-     */
     public function actionResetPassword($id): Response
     {
         Yii::$app->session->setFlash('error', 'Technical work in progress');

@@ -9,6 +9,7 @@ use app\models\Users;
 /**
  * UsersSearch represents the model behind the search form of `app\models\Users`.
  * @property mixed|null $username
+ * @property mixed|string|null $role
  */
 class UsersSearch extends Users
 {
@@ -19,7 +20,7 @@ class UsersSearch extends Users
     {
         return [
             [['id'], 'integer'],
-            [['name', 'username', 'image', 'email_verified_at', 'password', 'remember_token', 'created_at', 'updated_at'], 'safe'],
+            [['name', 'username', 'image', 'email_verified_at', 'password', 'remember_token', 'created_at', 'updated_at', 'role'], 'safe'],
         ];
     }
 
