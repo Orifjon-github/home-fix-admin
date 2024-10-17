@@ -13,6 +13,7 @@ use yii\widgets\ActiveForm;
         <div class="card-body">
             <?php $form = ActiveForm::begin(); ?>
 
+            <?= $form->field($model, 'title')->dropDownList(['web' => 'Web', 'corporate' => 'Corporate', 'individual' => 'Individual'], ['value' => 'web']) ?>
             <?= $form->field($model, 'title')->textarea(['rows' => 2]) ?>
 
             <?= $form->field($model, 'title_ru')->textarea(['rows' => 2]) ?>
@@ -20,6 +21,8 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'title_en')->textarea(['rows' => 2]) ?>
 
             <?= $form->field($model, 'image')->fileInput(['class' => 'form-control', 'id' => 'formFile']) ?>
+            <?= $form->field($model, 'image_ru')->fileInput(['class' => 'form-control', 'id' => 'formFile']) ?>
+            <?= $form->field($model, 'image_en')->fileInput(['class' => 'form-control', 'id' => 'formFile']) ?>
 
             <div class="form-group">
                 <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

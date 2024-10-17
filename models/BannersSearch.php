@@ -8,6 +8,7 @@ use app\models\Banners;
 
 /**
  * @property mixed|null $title_ru
+ * @property mixed|null $type
  */
 class BannersSearch extends Banners
 {
@@ -15,7 +16,7 @@ class BannersSearch extends Banners
     {
         return [
             [['id'], 'integer'],
-            [['title', 'title_ru','title_en', 'image' ,'enable', 'created_at', 'updated_at'], 'safe'],
+            [['title', 'title_ru','title_en', 'image' ,'enable', 'created_at', 'updated_at', 'image_ru', 'image_en', 'type', 'service_id'], 'safe'],
         ];
     }
 
@@ -40,8 +41,7 @@ class BannersSearch extends Banners
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'type' => $this->type,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])

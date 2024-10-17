@@ -42,8 +42,7 @@ class Banners extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title'], 'required'],
-            [['title', 'title_ru','title_en', 'image', 'enable'], 'string'],
+            [['title', 'title_ru','title_en', 'image', 'enable', 'image_ru', 'image_en', 'type', 'service_id', 'link'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
         ];
     }
