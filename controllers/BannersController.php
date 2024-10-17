@@ -30,7 +30,7 @@ class BannersController extends Controller
 
     public function actionUpdate($id): Response|string
     {
-        return HelperService::updateModel($this, new Banners(), $id);
+        return HelperService::updateModel($this, new Banners(), $id, 1);
     }
 
     public function actionDelete($id): Response

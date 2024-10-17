@@ -29,7 +29,7 @@ class ProcessesController extends Controller
 
     public function actionUpdate($id): Response|string
     {
-        return HelperService::updateModel($this, new Processes(), $id);
+        return HelperService::updateModel($this, new Processes(), $id, type: 1);
     }
 
     public function actionDelete($id): Response
