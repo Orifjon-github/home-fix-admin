@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Users;
 use app\models\UsersSearch;
 use app\services\HelperService;
+use app\services\HomeFixService;
 use Yii;
 use yii\web\Controller;
 use yii\web\Response;
@@ -30,12 +31,16 @@ class UsersController extends Controller
         return HelperService::viewModel($this, new Users(), $id);
     }
 
-    public function actionCreate()
+    public function actionCreate(): Response
     {
-        Yii::$app->session->setFlash('error', 'Technical work');
-        $searchModel = new UsersSearch();
-        $searchModel->role = 'corporate';
-        return HelperService::index($this, $searchModel);
+        $service = new HomeFixService();
+        $user = $service->createUser(Yii::$app->request->post());
+        if (!$user) {
+            Yii::$app->session->setFlash('error', $service->message);
+        } else {
+            $this->actionView($user->id);
+        }
+        return $this->redirect(['corporate']);
     }
 
     public function actionDelete($id): Response

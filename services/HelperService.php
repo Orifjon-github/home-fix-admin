@@ -9,6 +9,8 @@ use yii\helpers\Html;
 
 class HelperService
 {
+    const GET = 'get';
+    const POST = 'post';
     public static function enable(): array
     {
         $type = [
