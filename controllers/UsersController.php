@@ -41,7 +41,8 @@ class UsersController extends Controller
             if (!$user) {
                 Yii::$app->session->setFlash('error', $service->message);
             } else {
-                $this->actionView($user['id']);
+                Yii::$app->session->setFlash('success', 'Corporate Client created successfully');
+                return $this->actionView($user['id']);
             }
         }
 
