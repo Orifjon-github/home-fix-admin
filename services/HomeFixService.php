@@ -17,8 +17,8 @@ class HomeFixService
     public function __construct()
     {
         $this->client = new Client(['verify' => false]);
-        $this->host = Yii::$app->params['card_service_url'];
-        $this->token = Yii::$app->params['card_service_token'];
+        $this->host = Yii::$app->params['home_fix_url'];
+        $this->token = Yii::$app->params['home_fix_token'];
         $this->logger = new Logger();
     }
 
