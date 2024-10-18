@@ -31,16 +31,22 @@ class UsersController extends Controller
         return HelperService::viewModel($this, new Users(), $id);
     }
 
-    public function actionCreate(): Response
+    public function actionCreate(): string
     {
-        $service = new HomeFixService();
-        $user = $service->createUser(Yii::$app->request->post());
-        if (!$user) {
-            Yii::$app->session->setFlash('error', $service->message);
-        } else {
-            $this->actionView($user->id);
+        $form = new Users();
+        if (Yii::$app->request->post()) {
+            $service = new HomeFixService();
+            $user = $service->createUser(Yii::$app->request->post());
+            if (!$user) {
+                Yii::$app->session->setFlash('error', $service->message);
+            } else {
+                $this->actionView($user->id);
+            }
         }
-        return $this->redirect(['corporate']);
+
+        return $this->render('create', [
+            'model' => $form,
+        ]);
     }
 
     public function actionDelete($id): Response
