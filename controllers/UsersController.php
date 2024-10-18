@@ -41,7 +41,7 @@ class UsersController extends Controller
             if (!$user) {
                 Yii::$app->session->setFlash('error', $service->message);
             } else {
-                $this->actionView($user->id);
+                $this->actionView($user['id']);
             }
         }
 
