@@ -34,9 +34,10 @@ class UsersController extends Controller
     public function actionCreate(): string
     {
         $form = new Users();
-        if (Yii::$app->request->post()) {
+        $post = Yii::$app->request->post();
+        if ($post) {
             $service = new HomeFixService();
-            $user = $service->createUser(Yii::$app->request->post());
+            $user = $service->createUser($post['Users']);
             if (!$user) {
                 Yii::$app->session->setFlash('error', $service->message);
             } else {

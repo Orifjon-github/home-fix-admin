@@ -68,6 +68,6 @@ class HomeFixService
 
     public function createUser($data)
     {
-        return $this->send(HelperService::POST, '/internal/register', $data);
+        return $this->send(HelperService::POST, '/internal/register/', $data);
     }
 }
