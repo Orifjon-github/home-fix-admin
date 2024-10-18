@@ -4,67 +4,24 @@ namespace app\controllers;
 
 use app\models\UserHomes;
 use app\models\UserHomesSearch;
+use app\services\HelperService;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
-/**
- * UserHomesController implements the CRUD actions for UserHomes model.
- */
 class UserHomesController extends Controller
 {
-    /**
-     * @inheritDoc
-     */
-    public function behaviors()
-    {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
-                ],
-            ]
-        );
-    }
-
-    /**
-     * Lists all UserHomes models.
-     *
-     * @return string
-     */
     public function actionIndex()
     {
-        $searchModel = new UserHomesSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        return HelperService::index($this, new UserHomesSearch());
     }
 
-    /**
-     * Displays a single UserHomes model.
-     * @param string $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        return HelperService::viewModel($this, new UserHomes(), $id);
     }
 
-    /**
-     * Creates a new UserHomes model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
     public function actionCreate()
     {
         $model = new UserHomes();
@@ -82,13 +39,6 @@ class UserHomesController extends Controller
         ]);
     }
 
-    /**
-     * Updates an existing UserHomes model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
@@ -102,33 +52,9 @@ class UserHomesController extends Controller
         ]);
     }
 
-    /**
-     * Deletes an existing UserHomes model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
+    public function actionDelete($id): Response
     {
-        $this->findModel($id)->delete();
-
+        HelperService::findModel(new UserHomes(), $id)->delete();
         return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the UserHomes model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id ID
-     * @return UserHomes the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = UserHomes::findOne(['id' => $id])) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
