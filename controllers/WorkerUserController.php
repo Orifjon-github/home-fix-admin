@@ -14,7 +14,7 @@ class WorkerUserController extends Controller
     public function actionIndex()
     {
         $users = WorkerUserModel::find()->all(); // Fetch all users
-        return $this->render('worker/index', ['users' => $users]);
+        return $this->render('index', ['users' => $users]);
     }
 
     // Create a new worker user
