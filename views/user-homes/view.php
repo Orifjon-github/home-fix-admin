@@ -1,5 +1,7 @@
 <?php
 
+use app\services\HelperService;
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -44,6 +46,32 @@ $this->params['breadcrumbs'][] = $this->title;
                     'user_id',
                 ],
             ]) ?>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h3>Orders</h3>
+            <p><?= Html::a('Добавить новое', ['corporate-orders/create', 'id' => $model->id], ['class' => 'btn btn-success']) ?></p>
+
+            <?= /** @var mixed $dataProvider */
+            /** @var mixed $searchModel */
+            GridView::widget([
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+
+                    'id',
+                    'plan_id',
+                    'service_id',
+                    'user_home_id',
+                    'price',
+                    'period',
+                    'count_per_month',
+                    'status',
+                    HelperService::actionChild('corporate-orders')
+                ],
+            ]); ?>
         </div>
     </div>
 </div>

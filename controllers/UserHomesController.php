@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\CorporateOrdersSearch;
 use app\models\UserHomes;
 use app\models\UserHomesSearch;
 use app\services\HelperService;
@@ -17,9 +18,17 @@ class UserHomesController extends Controller
         return HelperService::index($this, new UserHomesSearch());
     }
 
-    public function actionView($id)
+    public function actionView($id): string
     {
-        return HelperService::viewModel($this, new UserHomes(), $id);
+        $searchModel = new CorporateOrdersSearch();
+        $searchModel->user_home_id = $id;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('view', [
+            'model' => HelperService::findModel(new UserHomes(), $id),
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel
+        ]);
     }
 
     public function actionCreate()

@@ -15,13 +15,9 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tasks-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Create Tasks', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -30,24 +26,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'home_equipment_id',
-            'type',
+            'name',
+            'description',
             'service_type',
-            'service_type_ru',
-            //'service_type_en',
-            //'name',
-            //'name_ru',
-            //'name_en',
-            //'start_time',
-            //'end_time',
-            //'description',
-            //'description_ru',
-            //'description_en',
-            //'duration',
-            //'is_equipment',
-            //'status',
-            //'created_at',
-            //'updated_at',
+            'status',
+            'home_equipment_id',
+            'start_time',
+            'end_time',
+            'duration',
+            'is_equipment',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Tasks $model, $key, $index, $column) {

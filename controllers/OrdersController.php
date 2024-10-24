@@ -25,7 +25,6 @@ class OrdersController extends Controller
     public function actionView($id): string
     {
         $searchModel = new TasksSearch();
-        $searchModel->order_id = $id;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('view', [
