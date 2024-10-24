@@ -3,7 +3,7 @@ namespace app\models;
 
 use Yii;
 
-class  WorkerUserModel extends \yii\db\ActiveRecord
+class  WorkerUsers extends \yii\db\ActiveRecord
 
 {
     public static function tableName(){
@@ -38,4 +38,15 @@ class  WorkerUserModel extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
         ];
     }
+    public function getTasks(){
+        // Get the Worker instance
+        $taskIds = TaskWorkerUser::find()
+            ->select('task_id') // Select only the task_id column
+            ->where(['worker_user_id' => $this->id])
+            ->column();
+        $tasks = Tasks::find()
+            ->where(['id' => $taskIds]); // Use 'IN' to filter;
+        return $tasks;
+    }
+
 }

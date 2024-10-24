@@ -3,7 +3,7 @@
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 $db_bot = require __DIR__ . '/db3.php';
-$worker = require __DIR__ . '/db4.php';
+
 
 $config = [
     'id' => 'basic-console',
@@ -30,7 +30,7 @@ $config = [
         ],
         'db' => $db,
         'db3' => $db_bot,
-        'db4'=> $worker,
+
         'authManager' => [
             'class' => 'yii\rbac\DbManager'
         ]

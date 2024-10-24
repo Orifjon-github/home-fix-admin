@@ -1,70 +1,148 @@
 <?php
+
 namespace app\controllers;
 
+use app\models\Tasks;
+use app\models\TaskWorkerUser;
+use app\models\WorkerUsers;
+use app\models\WorkerUsersSearch;
 use Yii;
-use app\models\WorkerUserModel;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\web\Response;
-use yii\widgets\ActiveForm;
+use yii\filters\VerbFilter;
 
+/**
+ * WorkerUserController implements the CRUD actions for WorkerUsers model.
+ */
 class WorkerUserController extends Controller
 {
-    // List all worker users
+    /**
+     * @inheritDoc
+     */
+    public function behaviors()
+    {
+        return array_merge(
+            parent::behaviors(),
+            [
+                'verbs' => [
+                    'class' => VerbFilter::className(),
+                    'actions' => [
+                        'delete' => ['POST'],
+                    ],
+                ],
+            ]
+        );
+    }
+
+    /**
+     * Lists all WorkerUsers models.
+     *
+     * @return string
+     */
     public function actionIndex()
     {
-        $users = WorkerUserModel::find()->all(); // Fetch all users
-        return $this->render('index', ['users' => $users]);
+
+        $users = WorkerUsers::find()->all(); // Fetch all users
+        $searchModel = new WorkerUsersSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+
     }
 
-    // Create a new worker user
+    /**
+     * Displays a single WorkerUsers model.
+     * @param string $id ID
+     * @return string
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionView($id)
+    {
+
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+
+        ]);
+    }
+
+    /**
+     * Creates a new WorkerUsers model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return string|\yii\web\Response
+     */
     public function actionCreate()
     {
-        $model = new WorkerUserModel();
+        $model = new WorkerUsers();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']); // Redirect to the index page after saving
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                // Hash the password before saving
+                $model->password = Yii::$app->security->generatePasswordHash($model->password);
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
+        } else {
+            $model->loadDefaultValues();
         }
 
-        return $this->render('create', ['model' => $model]);
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
-    // Update an existing worker user
+    /**
+     * Updates an existing WorkerUsers model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param string $id ID
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id); // Fetch the user by ID
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']); // Redirect after updating
+
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('update', ['model' => $model]);
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
-    // Delete a worker user
+    /**
+     * Deletes an existing WorkerUsers model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param string $id ID
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete(); // Delete the user by ID
-        return $this->redirect(['index']); // Redirect after deletion
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
     }
 
-    // Find a model based on its primary key
+    /**
+     * Finds the WorkerUsers model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param string $id ID
+     * @return WorkerUsers the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     protected function findModel($id)
     {
-        if (($model = WorkerUserModel::findOne($id)) !== null) {
+        if (($model = WorkerUsers::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    // Ajax validation for creating/updating
-    public function actionValidate()
-    {
-        $model = new WorkerUserModel();
-        if (Yii::$app->request->isAjax) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-        }
-    }
 }
