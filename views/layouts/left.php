@@ -14,8 +14,7 @@
                     'items' => \mdm\admin\components\MenuHelper::getAssignedMenu(Yii::$app->user->id)
                 ]
             ) ?>
+
         </nav>
-
     </div>
-
 </aside>
