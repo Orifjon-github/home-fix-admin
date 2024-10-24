@@ -17,13 +17,35 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'order_id') ?>
+    <?= $form->field($model, 'home_equipment_id') ?>
+
+    <?= $form->field($model, 'type') ?>
 
     <?= $form->field($model, 'service_type') ?>
 
-    <?= $form->field($model, 'name') ?>
+    <?= $form->field($model, 'service_type_ru') ?>
 
-    <?= $form->field($model, 'description') ?>
+    <?php // echo $form->field($model, 'service_type_en') ?>
+
+    <?php // echo $form->field($model, 'name') ?>
+
+    <?php // echo $form->field($model, 'name_ru') ?>
+
+    <?php // echo $form->field($model, 'name_en') ?>
+
+    <?php // echo $form->field($model, 'start_time') ?>
+
+    <?php // echo $form->field($model, 'end_time') ?>
+
+    <?php // echo $form->field($model, 'description') ?>
+
+    <?php // echo $form->field($model, 'description_ru') ?>
+
+    <?php // echo $form->field($model, 'description_en') ?>
+
+    <?php // echo $form->field($model, 'duration') ?>
+
+    <?php // echo $form->field($model, 'is_equipment') ?>
 
     <?php // echo $form->field($model, 'status') ?>
 

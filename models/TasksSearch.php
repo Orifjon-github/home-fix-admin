@@ -17,8 +17,8 @@ class TasksSearch extends Tasks
     public function rules()
     {
         return [
-            [['id', 'order_id'], 'integer'],
-            [['service_type', 'name', 'description', 'status', 'created_at', 'updated_at'], 'safe'],
+            [['id', 'duration', 'is_equipment'], 'integer'],
+            [['home_equipment_id', 'type', 'service_type', 'service_type_ru', 'service_type_en', 'name', 'name_ru', 'name_en', 'start_time', 'end_time', 'description', 'description_ru', 'description_en', 'status', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -59,14 +59,25 @@ class TasksSearch extends Tasks
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'order_id' => $this->order_id,
+            'duration' => $this->duration,
+            'is_equipment' => $this->is_equipment,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'service_type', $this->service_type])
+        $query->andFilterWhere(['like', 'home_equipment_id', $this->home_equipment_id])
+            ->andFilterWhere(['like', 'type', $this->type])
+            ->andFilterWhere(['like', 'service_type', $this->service_type])
+            ->andFilterWhere(['like', 'service_type_ru', $this->service_type_ru])
+            ->andFilterWhere(['like', 'service_type_en', $this->service_type_en])
             ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'name_ru', $this->name_ru])
+            ->andFilterWhere(['like', 'name_en', $this->name_en])
+            ->andFilterWhere(['like', 'start_time', $this->start_time])
+            ->andFilterWhere(['like', 'end_time', $this->end_time])
             ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'description_ru', $this->description_ru])
+            ->andFilterWhere(['like', 'description_en', $this->description_en])
             ->andFilterWhere(['like', 'status', $this->status]);
 
         return $dataProvider;

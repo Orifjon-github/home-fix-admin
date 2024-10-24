@@ -8,15 +8,25 @@ use Yii;
  * This is the model class for table "tasks".
  *
  * @property int $id
- * @property int $order_id
+ * @property string $home_equipment_id
+ * @property string $type
  * @property string|null $service_type
+ * @property string|null $service_type_ru
+ * @property string|null $service_type_en
  * @property string $name
+ * @property string|null $name_ru
+ * @property string|null $name_en
+ * @property string|null $start_time
+ * @property string|null $end_time
  * @property string|null $description
+ * @property string|null $description_ru
+ * @property string|null $description_en
+ * @property int|null $duration
+ * @property int|null $is_equipment
  * @property string $status
  * @property string|null $created_at
  * @property string|null $updated_at
  *
- * @property Orders $order
  * @property TaskDates[] $taskDates
  * @property TaskImages[] $taskImages
  * @property TaskWorks[] $taskWorks
@@ -45,11 +55,11 @@ class Tasks extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['order_id', 'name'], 'required'],
-            [['order_id'], 'integer'],
+            [['home_equipment_id', 'name'], 'required'],
+            [['type'], 'string'],
+            [['duration', 'is_equipment'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
-            [['service_type', 'name', 'description', 'status'], 'string', 'max' => 255],
-            [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Orders::class, 'targetAttribute' => ['order_id' => 'id']],
+            [['home_equipment_id', 'service_type', 'service_type_ru', 'service_type_en', 'name', 'name_ru', 'name_en', 'start_time', 'end_time', 'description', 'description_ru', 'description_en', 'status'], 'string', 'max' => 255],
         ];
     }
 
@@ -60,24 +70,25 @@ class Tasks extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'order_id' => 'Order ID',
+            'home_equipment_id' => 'Home Equipment ID',
+            'type' => 'Type',
             'service_type' => 'Service Type',
+            'service_type_ru' => 'Service Type Ru',
+            'service_type_en' => 'Service Type En',
             'name' => 'Name',
+            'name_ru' => 'Name Ru',
+            'name_en' => 'Name En',
+            'start_time' => 'Start Time',
+            'end_time' => 'End Time',
             'description' => 'Description',
+            'description_ru' => 'Description Ru',
+            'description_en' => 'Description En',
+            'duration' => 'Duration',
+            'is_equipment' => 'Is Equipment',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
-    }
-
-    /**
-     * Gets query for [[Order]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOrder()
-    {
-        return $this->hasOne(Orders::class, ['id' => 'order_id']);
     }
 
     /**
