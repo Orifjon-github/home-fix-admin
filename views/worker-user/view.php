@@ -13,8 +13,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="worker-users-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
@@ -26,42 +24,50 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'name',
-            'username',
-            'image',
-            'email_verified_at:email',
-            'password',
-            'status',
-            'remember_token',
-            'created_at',
-            'updated_at',
-        ],
-    ]) ?>
+    <div class="card">
+        <div class="card-body">
+            <?= DetailView::widget([
+                'model' => $model,
+                'attributes' => [
+                    'id',
+                    'name',
+                    'username',
+                    'image',
+                    'email_verified_at:email',
+                    'password',
+                    'status',
+                    'remember_token',
+                    'created_at',
+                    'updated_at',
+                ],
+            ]) ?>
+        </div>
+    </div>
     <h1>Tasks</h1>
-    <?php
-    $dataProvider = new \yii\data\ActiveDataProvider([
-            'query'=>$model->getTasks(),
-    ]);
-    echo \yii\grid\GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+   <div class="card">
+       <div class="card-body">
+           <?php
+           $dataProvider = new \yii\data\ActiveDataProvider([
+               'query'=>$model->getTasks(),
+           ]);
+           echo \yii\grid\GridView::widget([
+               'dataProvider' => $dataProvider,
+               'columns' => [
+                   ['class' => 'yii\grid\SerialColumn'],
 
-            //'id',
-            'order_id',
-            'service_type',
-            'name',
-            'description',
-            //'status',
-            //'created_at',
-            //'updated_at',
+                   //'id',
+                   'order_id',
+                   'service_type',
+                   'name',
+                   'description',
+                   //'status',
+                   //'created_at',
+                   //'updated_at',
 
-        ],
-    ]); ?>
+               ],
+           ]); ?>
+       </div>
+   </div>
 
 
 </div>
