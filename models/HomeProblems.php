@@ -42,6 +42,7 @@ class HomeProblems extends \yii\db\ActiveRecord
     {
         return [
             [['home_id'], 'required'],
+
             [['home_id'], 'integer'],
             [['problem'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
