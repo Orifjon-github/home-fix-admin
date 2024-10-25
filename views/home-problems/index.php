@@ -7,13 +7,19 @@ use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var app\models\ProblemsSearch $searchModel */
+/** @var app\models\HomeProblemsSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Home problems';
+$this->title = 'Home Problems';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="home-problems-index">
+
+
+    <p>
+        <?= Html::a('Create Home Problems', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
+
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <div class="card">
@@ -39,8 +45,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ],
             ]); ?>
+
+
         </div>
     </div>
-
 
 </div>

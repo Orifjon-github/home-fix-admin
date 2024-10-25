@@ -3,15 +3,15 @@
 namespace app\controllers;
 
 use app\models\HomeProblems;
-use app\models\ProblemsSearch;
+use app\models\HomeProblemsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ProblemsController implements the CRUD actions for HomeProblems model.
+ * HomeProblemsController implements the CRUD actions for HomeProblems model.
  */
-class ProblemsController extends Controller
+class HomeProblemsController extends Controller
 {
     /**
      * @inheritDoc
@@ -38,7 +38,7 @@ class ProblemsController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ProblemsSearch();
+        $searchModel = new HomeProblemsSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
