@@ -7,9 +7,9 @@ use yii\data\ActiveDataProvider;
 use app\models\HomeProblems;
 
 /**
- * ProblemsSearch represents the model behind the search form of `app\models\HomeProblems`.
+ * HomeProblemsSearch represents the model behind the search form of `app\models\HomeProblems`.
  */
-class ProblemsSearch extends HomeProblems
+class HomeProblemsSearch extends HomeProblems
 {
     /**
      * {@inheritdoc}
