@@ -18,7 +18,7 @@ class TasksSearch extends Tasks
     {
         return [
             [['id', 'duration', 'is_equipment'], 'integer'],
-            [['home_equipment_id', 'type', 'service_type', 'service_type_ru', 'service_type_en', 'name', 'name_ru', 'name_en', 'start_time', 'end_time', 'description', 'description_ru', 'description_en', 'status', 'created_at', 'updated_at'], 'safe'],
+            [['home_equipment_id', 'type', 'service_type', 'name', 'start_time', 'end_time', 'description', 'status', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -68,18 +68,13 @@ class TasksSearch extends Tasks
         $query->andFilterWhere(['like', 'home_equipment_id', $this->home_equipment_id])
             ->andFilterWhere(['like', 'type', $this->type])
             ->andFilterWhere(['like', 'service_type', $this->service_type])
-            ->andFilterWhere(['like', 'service_type_ru', $this->service_type_ru])
-            ->andFilterWhere(['like', 'service_type_en', $this->service_type_en])
             ->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'name_ru', $this->name_ru])
-            ->andFilterWhere(['like', 'name_en', $this->name_en])
             ->andFilterWhere(['like', 'start_time', $this->start_time])
             ->andFilterWhere(['like', 'end_time', $this->end_time])
             ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'description_ru', $this->description_ru])
-            ->andFilterWhere(['like', 'description_en', $this->description_en])
             ->andFilterWhere(['like', 'status', $this->status]);
 
         return $dataProvider;
     }
 }
+
