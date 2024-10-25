@@ -19,30 +19,34 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Tasks', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+   <div class="card">
+       <div class="card-body">
+           <?= GridView::widget([
+               'dataProvider' => $dataProvider,
+               'filterModel' => $searchModel,
+               'columns' => [
+                   ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'name',
-            'description',
-            'service_type',
-            'status',
-            'home_equipment_id',
-            'start_time',
-            'end_time',
-            'duration',
-            'is_equipment',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Tasks $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
-            ],
-        ],
-    ]); ?>
+                   'id',
+                   'name',
+                   'description',
+                   'service_type',
+                   'status',
+                   'home_equipment_id',
+                   'start_time',
+                   'end_time',
+                   'duration',
+                   'is_equipment',
+                   [
+                       'class' => ActionColumn::className(),
+                       'urlCreator' => function ($action, Tasks $model, $key, $index, $column) {
+                           return Url::toRoute([$action, 'id' => $model->id]);
+                       }
+                   ],
+               ],
+           ]); ?>
+       </div>
+   </div>
 
 
 </div>
