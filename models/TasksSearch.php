@@ -63,6 +63,7 @@ class TasksSearch extends Tasks
             'is_equipment' => $this->is_equipment,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+
         ]);
 
         $query->andFilterWhere(['like', 'home_equipment_id', $this->home_equipment_id])
