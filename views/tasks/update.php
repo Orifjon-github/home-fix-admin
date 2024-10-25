@@ -12,8 +12,13 @@ $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="tasks-update">
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+    <div class="card">
+       <div class="card-body">
+
+           <?= $this->render('_form', [
+               'model' => $model,
+           ]) ?>
+       </div>
+    </div>
 
 </div>

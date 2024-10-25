@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Tasks;
+use app\models\HomeProblems;
 
 /**
- * TasksSearch represents the model behind the search form of `app\models\Tasks`.
+ * ProblemsSearch represents the model behind the search form of `app\models\HomeProblems`.
  */
-class TasksSearch extends Tasks
+class ProblemsSearch extends HomeProblems
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class TasksSearch extends Tasks
     public function rules()
     {
         return [
-            [['id', 'duration', 'is_equipment'], 'integer'],
-            [['home_equipment_id', 'type', 'service_type', 'name', 'start_time', 'end_time', 'description', 'status', 'created_at', 'updated_at'], 'safe'],
+            [['id', 'home_id'], 'integer'],
+            [['problem', 'type', 'equipment_id', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class TasksSearch extends Tasks
      */
     public function search($params)
     {
-        $query = Tasks::find();
+        $query = HomeProblems::find();
 
         // add conditions that should always apply here
 
@@ -59,23 +59,15 @@ class TasksSearch extends Tasks
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'duration' => $this->duration,
-            'is_equipment' => $this->is_equipment,
+            'home_id' => $this->home_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-
         ]);
 
-        $query->andFilterWhere(['like', 'home_equipment_id', $this->home_equipment_id])
+        $query->andFilterWhere(['like', 'problem', $this->problem])
             ->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'service_type', $this->service_type])
-            ->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'start_time', $this->start_time])
-            ->andFilterWhere(['like', 'end_time', $this->end_time])
-            ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'status', $this->status]);
+            ->andFilterWhere(['like', 'equipment_id', $this->equipment_id]);
 
         return $dataProvider;
     }
 }
-

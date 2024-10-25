@@ -14,29 +14,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'home_equipment_id')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'type')->dropDownList([ 'prevention' => 'Prevention', 'repair' => 'Repair', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'type')->dropDownList(['prevention' => 'Prevention', 'repair' => 'Repair'], ['prompt' => '']) ?>
 
     <?= $form->field($model, 'service_type')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'service_type_ru')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'service_type_en')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'name_ru')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'name_en')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'start_time')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'end_time')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'description_ru')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'description_en')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'duration')->textInput() ?>
 

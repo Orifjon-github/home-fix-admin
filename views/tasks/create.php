@@ -11,8 +11,12 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tasks-create">
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+   <div class="card">
+       <div class="card-body">
+           <?= $this->render('_form', [
+               'model' => $model,
+           ]) ?>
+       </div>
+   </div>
 
 </div>
