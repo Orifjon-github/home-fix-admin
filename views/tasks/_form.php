@@ -12,7 +12,15 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'home_equipment_id')->textInput(['maxlength' => true]) ?>
+    <?php
+    $equipmentList = \app\models\HomeEquipment::find()->select(['id', 'name'])->asArray()->all();
+    $equipmentOptions = [];
+    foreach ($equipmentList as $equipment) {
+        $equipmentOptions[$equipment['id']] = $equipment['name'];
+    }
+    ?>
+    <?= $form->field($model, 'home_equipment_id')->dropDownList($equipmentOptions, ['prompt' => 'Select Equipment', 'maxlength' => 1]) ?>
+
 
     <?= $form->field($model, 'type')->dropDownList(['prevention' => 'Prevention', 'repair' => 'Repair'], ['prompt' => '']) ?>
 
@@ -28,7 +36,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'duration')->textInput() ?>
 
-    <?= $form->field($model, 'is_equipment')->textInput() ?>
+    <?= $form->field($model, 'is_equipment')->dropDownList(['1'=>'Oldindi' , '0'=>'Buzilgan']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
