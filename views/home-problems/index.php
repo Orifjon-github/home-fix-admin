@@ -14,12 +14,6 @@ $this->title = 'Home Problems';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="home-problems-index">
-
-
-    <p>
-        <?= Html::a('Create Home Problems', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <div class="card">
