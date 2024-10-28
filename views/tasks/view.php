@@ -30,7 +30,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model' => $model,
                 'attributes' => [
                     'id',
-                    'home_equipment_id',
+                    [
+                       'attribute' => 'home_equipment_id',
+                       'format' => 'raw', // This allows HTML to be rendered in the cell
+                       'value' => function ($model) {
+                           $equipment = \app\models\HomeEquipment::findOne($model->home_equipment_id);
+                           return $equipment
+                               ? \yii\helpers\Html::a($equipment->name, ['home-equipment/view', 'id' => $equipment->id], ['target' => '_blank'])
+                               : null;
+                       },
+                       'label' => 'Equipment Name',
+                   ],
                     'type',
                     'service_type',
                     'service_type_ru',
