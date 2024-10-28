@@ -84,27 +84,38 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="card">
         <div class="card-body">
+            <h1>Works</h1>
             <?= GridView::widget([
-                'dataProvider' => $images, // Set the data provider here
+                'dataProvider' => $works, // Set the data provider here
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'id',
-                    [
-                        'attribute' => 'image', // This should be your image attribute
-                        'label' => 'Image',
-                        'format' => 'raw', // Use raw format to render HTML
-                        'value' => function ($model) {
-                            return Html::img($model->image, [
-                                'alt' => 'Image',
-                                'style' => 'width:100px; height:auto;', // Customize the size as needed
-                            ]);
-                        },
-                    ],
-                    'state'
+                    'name',
+                    'price',
+                    'is_finished'
                 ],
             ]); ?>
         </div>
     </div>
+    <div class="card">
+        <div class="card-body">
+            <h1>Images</h1>
+            <div class="row">
+                <?php foreach ($images->getModels() as $model): ?>
+                    <div class="col-md-3"> <!-- Adjust the column size as needed -->
+                        <div class="card mb-3">
+                            <img src="<?= Html::encode($model->image) ?>" class="card-img-top" alt="Image" style="width:100%; height:auto;">
+                            <div class="card-body">
+
+                                <p class="card-text"><small class="text-muted"><?= Html::encode($model->state) ?></small></p>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+
 
 <!--    <div class="card">-->
 <!--        <div class="card-body">-->

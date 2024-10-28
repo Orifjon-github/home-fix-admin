@@ -7,6 +7,7 @@ use app\models\TaskImages;
 use app\models\Tasks;
 use app\models\TasksMaterials;
 use app\models\TasksSearch;
+use app\models\TaskWorker;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -66,6 +67,9 @@ class TasksController extends Controller
         $taskImages = new ActiveDataProvider([
             'query'=> TaskImages::find()->where(['task_id' => $id])
         ]);
+        $taskWorks = new ActiveDataProvider([
+            'query'=> TaskWorker::find()->where(['task_id' => $id])
+        ]);
 //        $equptments = new ActiveDataProvider([
 //            'query' => TaskEquipment::find()->where(['task_id' => $id]),
 //
@@ -74,6 +78,7 @@ class TasksController extends Controller
             'model' => $this->findModel($id),
             'materials' => $materials,
             'images'=>$taskImages,
+            'works'=>$taskWorks,
 //            'equptments'=>$equptments
         ]);
     }
