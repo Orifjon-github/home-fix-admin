@@ -14,38 +14,39 @@ $this->title = 'Corporate Orders';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="corporate-orders-index">
+    <div class="card">
+        <div class="card-body">
+            <p>
+                <?= Html::a('Create Corporate Orders', ['create'], ['class' => 'btn btn-success']) ?>
+            </p>
 
-    <p>
-        <?= Html::a('Create Corporate Orders', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+            <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'plan_id',
-            'service_id',
-            'user_home_id',
-            'price',
-            'period',
-            'count_per_month',
-            //'additional',
-            'status',
-            'created_at',
-            //'updated_at',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, CorporateOrders $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
-            ],
-        ],
-    ]); ?>
-
-
+                    'id',
+                    'plan_id',
+                    'service_id',
+                    'user_home_id',
+                    'price',
+                    'period',
+                    'count_per_month',
+                    //'additional',
+                    'status',
+                    'created_at',
+                    //'updated_at',
+                    [
+                        'class' => ActionColumn::className(),
+                        'urlCreator' => function ($action, CorporateOrders $model, $key, $index, $column) {
+                            return Url::toRoute([$action, 'id' => $model->id]);
+                        }
+                    ],
+                ],
+            ]); ?>
+        </div>
+    </div>
 </div>
