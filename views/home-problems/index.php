@@ -31,10 +31,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => function ($model) {
                             $equipment = \app\models\UserHomes::findOne($model->home_id);
                             return $equipment
-                                ? \yii\helpers\Html::a($equipment->name, ['user-homes/view', 'id' => $equipment->id], ['target' => '_blank'])
+                                ? \yii\helpers\Html::a($equipment->getUser()->one()->name, ['users/view', 'id' => $equipment->user_id], ['target' => '_blank'])
                                 : null;
                         },
-                        'label' => 'Equipment Name',
+                        'label' => 'User',
                     ],
                     'problem:ntext',
                     'type',
