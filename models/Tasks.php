@@ -73,4 +73,7 @@ class Tasks extends \yii\db\ActiveRecord
             'is_equipment' => 'Is Equipment',
         ];
     }
+    public function getEquipments(){
+        return $this->hasMany(HomeEquipment::class, ['home_equipment_id' => 'id']);
+    }
 }
