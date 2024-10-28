@@ -20,9 +20,8 @@ use yii\widgets\ActiveForm;
     }
     ?>
     <?= $form->field($model, 'home_equipment_id')->dropDownList($equipmentOptions, ['prompt' => 'Select Equipment', 'maxlength' => 1]) ?>
-
-
     <?= $form->field($model, 'type')->dropDownList(['prevention' => 'Prevention', 'repair' => 'Repair'], ['prompt' => '']) ?>
+    <?= $form->field($model, 'status')->dropDownList(['done' => 'Done', 'process' => 'Process' , 'new'=>'New' , 'checking'=>'Checking'], ['prompt' => '']) ?>
 
     <?= $form->field($model, 'service_type')->textInput(['maxlength' => true]) ?>
 
@@ -35,6 +34,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'duration')->textInput() ?>
+
 
     <?= $form->field($model, 'is_equipment')->dropDownList(['1'=>'Oldindi' , '0'=>'Buzilgan']) ?>
 

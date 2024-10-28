@@ -1,5 +1,6 @@
 <?php
 
+use app\models\HomeEquipment;
 use app\models\Tasks;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -38,11 +39,20 @@ $this->params['breadcrumbs'][] = $this->title;
                    'duration',
                    'is_equipment',
                    [
+                       'attribute' => 'home_equipment_id',
+                       'value' => function ($model) {
+                           $equipment = \app\models\HomeEquipment::findOne($model->home_equipment_id);
+                           return $equipment ? $equipment->name : null;
+                       },
+                       'label' => 'Equipment Name',
+                   ],
+                   [
                        'class' => ActionColumn::className(),
                        'urlCreator' => function ($action, Tasks $model, $key, $index, $column) {
                            return Url::toRoute([$action, 'id' => $model->id]);
                        }
                    ],
+
                ],
            ]); ?>
        </div>

@@ -26,20 +26,24 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'home_id',
-            'name',
-            'brand',
-            'model',
-            'description:ntext',
-            'image:ntext',
-            'fix_date',
-            'created_at',
-            'updated_at',
-        ],
-    ]) ?>
+   <div class="card">
+       <div class="card-body">
+           <?= DetailView::widget([
+               'model' => $model,
+               'attributes' => [
+                   'id',
+                   'home_id',
+                   'name',
+                   'brand',
+                   'model',
+                   'description:ntext',
+                   'image:ntext',
+                   'fix_date',
+                   'created_at',
+                   'updated_at',
+               ],
+           ]) ?>
+       </div>
+   </div>
 
 </div>
