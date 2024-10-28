@@ -89,4 +89,7 @@ class UserHomes extends \yii\db\ActiveRecord
             ->indexBy('id')
             ->column();
     }
+    public function getUser(){
+        return $this->hasOne(Users::class, ['id' => 'user_id']);
+    }
 }
