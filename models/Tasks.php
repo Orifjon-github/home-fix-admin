@@ -45,7 +45,7 @@ class Tasks extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['home_equipment_id', 'name', 'status'], 'required'], // Add any required fields
+            [['home_equipment_id', 'name', 'status'], 'required'],
             [['type', 'service_type', 'name', 'description', 'status'], 'string', 'max' => 255],
             [['duration', 'is_equipment'], 'integer'],
             [['start_time', 'end_time', 'created_at', 'updated_at'], 'safe'],
@@ -73,7 +73,9 @@ class Tasks extends \yii\db\ActiveRecord
             'is_equipment' => 'Is Equipment',
         ];
     }
-    public function getEquipments(){
-        return $this->hasMany(HomeEquipment::class, ['home_equipment_id' => 'id']);
+    public function getHomeEquipment()
+    {
+        return HomeEquipment::findOne($this->home_equipment_id);
     }
+
 }

@@ -25,10 +25,30 @@ $this->params['breadcrumbs'][] = $this->title;
                     ['class' => 'yii\grid\SerialColumn'],
 
                     'id',
-                    'home_id',
+                    [
+                        'attribute' => 'home_id',
+                        'format' => 'raw', // This allows HTML to be rendered in the cell
+                        'value' => function ($model) {
+                            $equipment = \app\models\UserHomes::findOne($model->home_id);
+                            return $equipment
+                                ? \yii\helpers\Html::a($equipment->name, ['user-homes/view', 'id' => $equipment->id], ['target' => '_blank'])
+                                : null;
+                        },
+                        'label' => 'Equipment Name',
+                    ],
                     'problem:ntext',
                     'type',
-                    'equipment_id',
+                    [
+                        'attribute' => 'equipment_id',
+                        'format' => 'raw', // This allows HTML to be rendered in the cell
+                        'value' => function ($model) {
+                            $equipment = \app\models\HomeEquipment::findOne($model->equipment_id);
+                            return $equipment
+                                ? \yii\helpers\Html::a($equipment->name, ['home-equipment/view', 'id' => $equipment->id], ['target' => '_blank'])
+                                : null;
+                        },
+                        'label' => 'Equipment Name',
+                    ],
                     //'created_at',
                     //'updated_at',
                     [
