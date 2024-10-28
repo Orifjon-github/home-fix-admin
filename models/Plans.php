@@ -65,23 +65,11 @@ class Plans extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Gets query for [[Orders]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOrders()
+    public static function plans(): array
     {
-        return $this->hasMany(Orders::class, ['plan_id' => 'id']);
-    }
-
-    /**
-     * Gets query for [[PlanAdvantages]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPlanAdvantages()
-    {
-        return $this->hasMany(PlanAdvantages::class, ['plan_id' => 'id']);
+        return self::find()
+            ->select(['id', 'duration'])
+            ->indexBy('id')
+            ->column();
     }
 }

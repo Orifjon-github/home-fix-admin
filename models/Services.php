@@ -81,9 +81,12 @@ class Services extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getServiceAdvantages()
+    public static function services(): array
     {
-        return $this->hasMany(ServiceAdvantages::class, ['service_id' => 'id']);
+        return self::find()
+            ->select(['id', 'title'])
+            ->indexBy('id')
+            ->column();
     }
 
 }

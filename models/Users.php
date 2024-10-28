@@ -17,32 +17,19 @@ use Yii;
  * @property string|null $remember_token
  * @property string|null $created_at
  * @property string|null $updated_at
- *
- * @property Notifications[] $notifications
- * @property UserEquipment[] $userEquipments
- * @property UserQuestions[] $userQuestions
  */
 class Users extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'users';
     }
 
-    /**
-     * @return \yii\db\Connection the database connection used by this AR class.
-     */
     public static function getDb()
     {
         return Yii::$app->get('db2');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -54,10 +41,7 @@ class Users extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
@@ -72,33 +56,11 @@ class Users extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Gets query for [[Notifications]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getNotifications()
+    public static function users(): array
     {
-        return $this->hasMany(Notifications::class, ['user_id' => 'id']);
-    }
-
-    /**
-     * Gets query for [[UserEquipments]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUserEquipments()
-    {
-        return $this->hasMany(UserEquipment::class, ['user_id' => 'id']);
-    }
-
-    /**
-     * Gets query for [[UserQuestions]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUserQuestions()
-    {
-        return $this->hasMany(UserQuestions::class, ['user_id' => 'id']);
+        return self::find()
+            ->select(['id', 'name'])
+            ->indexBy('id')
+            ->column();
     }
 }

@@ -82,33 +82,11 @@ class UserHomes extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Gets query for [[HomeEquipments]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getHomeEquipments()
+    public static function branches(): array
     {
-        return $this->hasMany(HomeEquipment::class, ['home_id' => 'id']);
-    }
-
-    /**
-     * Gets query for [[HomeProblems]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getHomeProblems()
-    {
-        return $this->hasMany(HomeProblems::class, ['home_id' => 'id']);
-    }
-
-    /**
-     * Gets query for [[User]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser()
-    {
-        return $this->hasOne(Users::class, ['id' => 'user_id']);
+        return self::find()
+            ->select(['id', 'name'])
+            ->indexBy('id')
+            ->column();
     }
 }

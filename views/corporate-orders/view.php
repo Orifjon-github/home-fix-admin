@@ -1,5 +1,7 @@
 <?php
 
+use app\services\HelperService;
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -12,35 +14,59 @@ $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="corporate-orders-view">
+    <div class="card">
+        <div class="card-body">
+            <p>
+                <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+                    'class' => 'btn btn-danger',
+                    'data' => [
+                        'confirm' => 'Are you sure you want to delete this item?',
+                        'method' => 'post',
+                    ],
+                ]) ?>
+            </p>
 
-    <h1><?= Html::encode($this->title) ?></h1>
+            <?= DetailView::widget([
+                'model' => $model,
+                'attributes' => [
+                    'id',
+                    'plan_id',
+                    'service_id',
+                    'user_home_id',
+                    'price',
+                    'period',
+                    'count_per_month',
+                    'additional',
+                    'status',
+                    'created_at',
+                    'updated_at',
+                ],
+            ]) ?>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h3>Equipments</h3>
+            <p><?= Html::a('Добавить новое', ['home-equipments/create', 'id' => $model->id], ['class' => 'btn btn-success']) ?></p>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+            <?= /** @var mixed $dataProvider */
+            /** @var mixed $searchModel */
+            GridView::widget([
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'plan_id',
-            'service_id',
-            'user_home_id',
-            'price',
-            'period',
-            'count_per_month',
-            'additional',
-            'status',
-            'created_at',
-            'updated_at',
-        ],
-    ]) ?>
-
+                    'id',
+                    'home_id',
+                    'name',
+                    'description',
+                    HelperService::image(),
+                    'created_at',
+                    HelperService::actionChild('home-equipment')
+                ],
+            ]); ?>
+        </div>
+    </div>
 </div>

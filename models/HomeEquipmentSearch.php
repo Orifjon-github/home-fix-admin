@@ -8,6 +8,7 @@ use app\models\HomeEquipment;
 
 /**
  * HomeEquipmentSearch represents the model behind the search form of `app\models\HomeEquipment`.
+ * @property mixed|null $corporate_order_id
  */
 class HomeEquipmentSearch extends HomeEquipment
 {
