@@ -11,7 +11,6 @@ use yii\widgets\ActiveForm;
 <div class="tasks-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
     <?php
     $equipmentList = \app\models\HomeEquipment::find()->select(['id', 'name'])->asArray()->all();
     $equipmentOptions = [];

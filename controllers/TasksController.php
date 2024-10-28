@@ -2,8 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\TaskEquipment;
+use app\models\TaskImages;
 use app\models\Tasks;
+use app\models\TasksMaterials;
 use app\models\TasksSearch;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -55,8 +59,22 @@ class TasksController extends Controller
      */
     public function actionView($id)
     {
+        $materials = new ActiveDataProvider([
+            'query' => TasksMaterials::find()->where(['task_id' => $id]),
+
+        ]);
+        $taskImages = new ActiveDataProvider([
+            'query'=> TaskImages::find()->where(['task_id' => $id])
+        ]);
+//        $equptments = new ActiveDataProvider([
+//            'query' => TaskEquipment::find()->where(['task_id' => $id]),
+//
+//        ]);
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'materials' => $materials,
+            'images'=>$taskImages,
+//            'equptments'=>$equptments
         ]);
     }
 
@@ -68,7 +86,6 @@ class TasksController extends Controller
     public function actionCreate()
     {
         $model = new Tasks();
-
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);

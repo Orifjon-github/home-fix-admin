@@ -77,5 +77,9 @@ class Tasks extends \yii\db\ActiveRecord
     {
         return HomeEquipment::findOne($this->home_equipment_id);
     }
+    public function getMaterials(){
+       return TasksMaterials::find()->where(['task_id' => $this->id])->all();
+
+    }
 
 }
