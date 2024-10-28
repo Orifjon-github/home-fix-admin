@@ -12,6 +12,8 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?php $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+            ?>
     <?php
     $equipmentList = \app\models\HomeEquipment::find()->select(['id', 'name'])->asArray()->all();
     $equipmentOptions = [];
