@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "user_homes".
@@ -84,10 +85,12 @@ class UserHomes extends \yii\db\ActiveRecord
 
     public static function branches(): array
     {
-        return self::find()
+        $branches = self::find()
             ->select(['id', 'name'])
-            ->indexBy('id')
-            ->column();
+            ->asArray()
+            ->all();
+
+        return ArrayHelper::map($branches, 'id', 'name');
     }
     public function getUser(){
         return $this->hasOne(Users::class, ['id' => 'user_id']);

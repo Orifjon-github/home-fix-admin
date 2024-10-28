@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "services".
@@ -83,10 +84,12 @@ class Services extends \yii\db\ActiveRecord
 
     public static function services(): array
     {
-        return self::find()
+        $services = self::find()
             ->select(['id', 'title'])
-            ->indexBy('id')
-            ->column();
+            ->asArray()
+            ->all();
+
+        return ArrayHelper::map($services, 'id', 'title');
     }
 
 }

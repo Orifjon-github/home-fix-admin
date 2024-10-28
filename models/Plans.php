@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "plans".
@@ -67,9 +68,11 @@ class Plans extends \yii\db\ActiveRecord
 
     public static function plans(): array
     {
-        return self::find()
+        $plans = self::find()
             ->select(['id', 'duration'])
-            ->indexBy('id')
-            ->column();
+            ->asArray()
+            ->all();
+
+        return ArrayHelper::map($plans, 'id', 'duration');
     }
 }
