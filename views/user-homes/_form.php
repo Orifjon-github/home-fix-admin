@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Users;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -13,7 +14,7 @@ use yii\widgets\ActiveForm;
         <div class="card-body">
             <?php $form = ActiveForm::begin(); ?>
 
-            <?= $form->field($model, 'user_id')->textInput() ?>
+            <?= $form->field($model, 'user_id')->dropDownList(Users::users(), ['prompt' => 'Select User']) ?>
 
             <?= $form->field($model, 'type')->dropDownList(['branch' => 'Branch']) ?>
 
