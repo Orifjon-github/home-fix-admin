@@ -1,5 +1,6 @@
 <?php
 
+use app\models\CorporateOrders;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -9,27 +10,29 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="home-equipment-form">
+    <div class="card">
+        <div class="card-body">
+            <?php $form = ActiveForm::begin(); ?>
 
-    <?php $form = ActiveForm::begin(); ?>
+            <?= $form->field($model, 'corporate_order_id')->dropDownList(CorporateOrders::orders(), ['prompt' => 'Select Order']) ?>
 
-    <?= $form->field($model, 'home_id')->textInput() ?>
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'brand')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'brand')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'model')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'model')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+            <?= $form->field($model, 'image')->fileInput(['class' => 'form-control', 'id' => 'formFile']) ?>
 
-    <?= $form->field($model, 'image')->textarea(['rows' => 6]) ?>
+            <?= $form->field($model, 'fix_date')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'fix_date')->textInput(['maxlength' => true]) ?>
+            <div class="form-group">
+                <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+            </div>
 
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+            <?php ActiveForm::end(); ?>
+        </div>
     </div>
-
-    <?php ActiveForm::end(); ?>
-
 </div>

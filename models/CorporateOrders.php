@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "corporate_orders".
@@ -67,5 +68,15 @@ class CorporateOrders extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    public static function orders(): array
+    {
+        $users = self::find()
+            ->select(['id', 'user_home_id'])
+            ->asArray()
+            ->all();
+
+        return ArrayHelper::map($users, 'id', 'user_home_id');
     }
 }

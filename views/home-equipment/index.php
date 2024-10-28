@@ -1,6 +1,7 @@
 <?php
 
 use app\models\HomeEquipment;
+use app\services\HelperService;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -26,21 +27,16 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'home_id',
+            'corporate_order_id',
             'name',
             'brand',
             'model',
-            //'description:ntext',
-            //'image:ntext',
-            //'fix_date',
-            //'created_at',
+            'description',
+            HelperService::image(),
+            'fix_date',
+            'created_at',
             //'updated_at',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, HomeEquipment $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
-            ],
+            HelperService::action()
         ],
     ]); ?>
 

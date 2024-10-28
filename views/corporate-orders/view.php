@@ -45,28 +45,4 @@ $this->params['breadcrumbs'][] = $this->title;
             ]) ?>
         </div>
     </div>
-    <div class="card">
-        <div class="card-body">
-            <h3>Equipments</h3>
-            <p><?= Html::a('Добавить новое', ['home-equipments/create', 'id' => $model->id], ['class' => 'btn btn-success']) ?></p>
-
-            <?= /** @var mixed $dataProvider */
-            /** @var mixed $searchModel */
-            GridView::widget([
-                'dataProvider' => $dataProvider,
-                'filterModel' => $searchModel,
-                'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
-
-                    'id',
-                    'home_id',
-                    'name',
-                    'description',
-                    HelperService::image(),
-                    'created_at',
-                    HelperService::actionChild('home-equipment')
-                ],
-            ]); ?>
-        </div>
-    </div>
 </div>
