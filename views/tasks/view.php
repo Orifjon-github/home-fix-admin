@@ -65,6 +65,33 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="card">
         <div class="card-body">
+            <h1>Worker</h1>
+
+            <?= Html::a('Create Worker', ['/task-worker-user/create'], ['class' => 'btn btn-success']) ?>
+            <?= GridView::widget([
+                'dataProvider' => $workers, // Set the data provider here
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+                    'id',
+                    'task_id',
+                    [
+                        'attribute' => 'worker_user_id',
+                        'format' => 'raw', // This allows HTML to be rendered in the cell
+                        'value' => function ($model) {
+                            $worker = \app\models\WorkerUsers::findOne($model->worker_user_id);
+
+                            return $worker
+                                ? \yii\helpers\Html::a($worker->name, ['worker-user/view', 'id' => $worker->id], ['target' => '_blank'])
+                                : null;
+                        },
+                        'label' => 'Worker',
+                    ],
+                ],
+            ]); ?>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
             <h1>Materials</h1>
             <?= Html::a('Create Material', ['/task-materials/create'], ['class' => 'btn btn-success']) ?>
             <?= GridView::widget([
