@@ -3,6 +3,10 @@ namespace app\models;
 
 use Yii;
 
+/**
+ * @property mixed|null $id
+ * @property mixed|string|null $password
+ */
 class  WorkerUsers extends \yii\db\ActiveRecord
 
 {
