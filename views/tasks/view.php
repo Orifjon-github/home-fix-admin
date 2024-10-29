@@ -66,8 +66,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="card">
         <div class="card-body">
             <h1>Materials</h1>
+            <?= Html::a('Create Material', ['/task-materials/create'], ['class' => 'btn btn-success']) ?>
             <?= GridView::widget([
-
                 'dataProvider' => $materials, // Set the data provider here
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
@@ -85,6 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="card">
         <div class="card-body">
             <h1>Works</h1>
+            <?= Html::a('Create Works', ['/task-works/create'], ['class' => 'btn btn-success']) ?>
             <?= GridView::widget([
                 'dataProvider' => $works, // Set the data provider here
                 'columns' => [
