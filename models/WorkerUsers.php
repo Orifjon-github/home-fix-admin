@@ -23,7 +23,6 @@ class  WorkerUsers extends \yii\db\ActiveRecord
             [['username', 'name', 'password'], 'required'],
             ['username', 'string', 'max' => 255],
             ['password', 'string', 'min' => 6], // Example: password must be at least 6 characters
-            ['status', 'in', 'range' => [0, 1]], // Assuming status can be 0 or 1
             [['image'], 'string'], // Adjust based on your actual use case
             [['created_at', 'updated_at'], 'safe'], // Dates can be set to safe
         ];
