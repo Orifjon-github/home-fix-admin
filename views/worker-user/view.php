@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'id',
                     'name',
                     'username',
-                    'image',
+                    \app\services\HelperService::image(),
                     'email_verified_at:email',
                     'password',
                     'status',
