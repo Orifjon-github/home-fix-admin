@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'plan_id')->dropDownList(Plans::plans(), ['prompt' => 'Select Plan']) ?>
 
             <?= $form->field($model, 'service_id')->dropDownList(PlanAdvantages::getAdvantages(), ['prompt' => 'Select Plan']) ?>
-
+            <?= $form->field($model, 'status')->dropDownList(['pending'=>'Pending' , 'active'=>'Active' , 'done'=>'Done'], ['prompt' => 'Select Plan']) ?>
             <?= $form->field($model, 'user_home_id')->dropDownList(UserHomes::branches(), ['prompt' => 'Select Plan']) ?>
 
             <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>

@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'user_home_id',
                     'price',
                     'name',
+                    'status',
                     'period',
                     'count_per_month',
                     'additional',
