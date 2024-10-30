@@ -2,8 +2,7 @@
 
 namespace app\controllers;
 
-use app\models\Tasks;
-use app\models\TaskWorkerUser;
+
 use app\models\WorkerUsers;
 use app\models\WorkerUsersSearch;
 use app\services\FileService;
@@ -11,8 +10,7 @@ use app\services\HelperService;
 use Yii;
 use yii\db\Exception;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+
 use yii\web\Response;
 
 class WorkerUserController extends Controller

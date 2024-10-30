@@ -44,9 +44,9 @@ class CorporateOrders extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['plan_id', 'service_id', 'user_home_id'], 'required'],
+            [['name','plan_id', 'service_id', 'user_home_id'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
-            [['plan_id', 'service_id', 'user_home_id', 'price', 'period', 'count_per_month', 'additional', 'status'], 'string', 'max' => 255],
+            [['name' ,'plan_id', 'service_id', 'user_home_id', 'price', 'period', 'count_per_month', 'additional', 'status'], 'string', 'max' => 255],
         ];
     }
 
@@ -58,6 +58,7 @@ class CorporateOrders extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'plan_id' => 'Plan ID',
+            'name'=>'Name',
             'service_id' => 'Service ID',
             'user_home_id' => 'User Home ID',
             'price' => 'Price',
@@ -73,7 +74,7 @@ class CorporateOrders extends \yii\db\ActiveRecord
     public static function orders(): array
     {
         $users = self::find()
-            ->select(['id', 'user_home_id'])
+            ->select([ 'name' , 'id'])
             ->asArray()
             ->all();
 

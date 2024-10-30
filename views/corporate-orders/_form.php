@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
     <div class="card">
         <div class="card-body">
             <?php $form = ActiveForm::begin(); ?>
-
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true])?>
             <?= $form->field($model, 'plan_id')->dropDownList(Plans::plans(), ['prompt' => 'Select Plan']) ?>
 
             <?= $form->field($model, 'service_id')->dropDownList(Services::services(), ['prompt' => 'Select Plan']) ?>

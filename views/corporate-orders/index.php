@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'price',
                     'period',
                     'count_per_month',
-                    //'additional',
+                    'name',
                     'status',
                     'created_at',
                     //'updated_at',
