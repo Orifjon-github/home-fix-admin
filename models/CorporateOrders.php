@@ -44,11 +44,12 @@ class CorporateOrders extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name','plan_id', 'service_id', 'user_home_id'], 'required'],
+            [['plan_id', 'name', 'name_ru', 'name_en', 'description', 'description_ru', 'description_en', 'service_id', 'user_home_id', 'price', 'price_ru', 'price_en', 'period', 'period_ru', 'period_en', 'count_per_month', 'additional', 'status'], 'safe'],
+            [['price'], 'number'],
             [['created_at', 'updated_at'], 'safe'],
-            [['name' ,'plan_id', 'service_id', 'user_home_id', 'price', 'period', 'count_per_month', 'additional', 'status'], 'string', 'max' => 255],
         ];
     }
+
 
     /**
      * {@inheritdoc}
@@ -59,10 +60,18 @@ class CorporateOrders extends \yii\db\ActiveRecord
             'id' => 'ID',
             'plan_id' => 'Plan ID',
             'name'=>'Name',
+            'name_ru'=>'Name Ru',
+            'name_en'=>'Name En',
+            'description'=>'Description',
+            'description_ru'=>'Description Ru',
+            'description_en'=>'Description Eu',
             'service_id' => 'Service ID',
             'user_home_id' => 'User Home ID',
             'price' => 'Price',
+            'price_ru' => 'Price Ru','price_en' => 'Price En',
             'period' => 'Period',
+            'periodu_ru' => 'Period Ru',
+            'period_en' => 'Period En',
             'count_per_month' => 'Count Per Month',
             'additional' => 'Additional',
             'status' => 'Status',

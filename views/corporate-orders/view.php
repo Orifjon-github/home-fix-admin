@@ -36,15 +36,20 @@ $this->params['breadcrumbs'][] = $this->title;
                     'user_home_id',
                     'price',
                     'name',
+                    'name_ru',
+                    'name_en',
+                    'description',       // Add description fields here
+                    'description_ru',
+                    'description_en',
                     'status',
                     'period',
                     'count_per_month',
                     'additional',
-                    'status',
-                    'created_at',
-                    'updated_at',
+                    'created_at:datetime',
+                    'updated_at:datetime',
                 ],
             ]) ?>
+
         </div>
     </div>
 </div>
