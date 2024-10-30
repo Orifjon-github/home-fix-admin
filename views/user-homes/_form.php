@@ -19,10 +19,17 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'type')->dropDownList(['branch' => 'Branch']) ?>
 
             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'name_ru')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'name_en')->textInput(['maxlength' => true]) ?>
+
 
             <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'title_ru')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'title_en')->textInput(['maxlength' => true]) ?>
 
             <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'description_ru')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'description_en')->textInput(['maxlength' => true]) ?>
 
             <?= $form->field($model, 'target')->textInput(['maxlength' => true]) ?>
 
