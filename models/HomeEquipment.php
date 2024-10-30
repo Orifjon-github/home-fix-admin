@@ -46,9 +46,9 @@ class HomeEquipment extends \yii\db\ActiveRecord
         return [
             [['home_id', 'name'], 'required'],
             [['home_id'], 'integer'],
-            [['description', 'image'], 'string'],
+            [['description','description_ru','description_en', 'image'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
-            [['name', 'brand', 'model', 'fix_date'], 'string', 'max' => 255],
+            [['name','name_ru','name_en', 'brand', 'model', 'fix_date'], 'string', 'max' => 255],
             [['home_id'], 'exist', 'skipOnError' => true, 'targetClass' => UserHomes::class, 'targetAttribute' => ['home_id' => 'id']],
         ];
     }
@@ -62,9 +62,13 @@ class HomeEquipment extends \yii\db\ActiveRecord
             'id' => 'ID',
             'home_id' => 'Home ID',
             'name' => 'Name',
+            'name_ru'=>'Name Ru',
+            'name_en'=>'Name En',
             'brand' => 'Brand',
             'model' => 'Model',
             'description' => 'Description',
+            'description_ru' => 'Description Ru',
+            'description_en' => 'Description En',
             'image' => 'Image',
             'fix_date' => 'Fix Date',
             'created_at' => 'Created At',

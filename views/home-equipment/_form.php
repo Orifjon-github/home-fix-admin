@@ -18,11 +18,15 @@ use yii\widgets\ActiveForm;
 
             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
+            <?= $form->field($model, 'name_ru')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'name_en')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'brand')->textInput(['maxlength' => true]) ?>
 
             <?= $form->field($model, 'model')->textInput(['maxlength' => true]) ?>
 
             <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+            <?= $form->field($model, 'description_ru')->textarea(['rows' => 6]) ?>
+            <?= $form->field($model, 'description_en')->textarea(['rows' => 6]) ?>
 
             <?= $form->field($model, 'image')->fileInput(['class' => 'form-control', 'id' => 'formFile']) ?>
 
