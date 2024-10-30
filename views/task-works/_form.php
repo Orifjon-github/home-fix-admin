@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'is_finished')->dropDownList([ '0', '1', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'is_finished')->dropDownList([ '0'=>'NOT', '1'=>'DONE', ], ['prompt' => '']) ?>
 
     <?= $form->field($model, 'created_at')->textInput() ?>
 
