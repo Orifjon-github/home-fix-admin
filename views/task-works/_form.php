@@ -23,6 +23,8 @@ use yii\widgets\ActiveForm;
 
 
     <?= $form->field($model, 'name')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'name_ru')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'name_en')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
 

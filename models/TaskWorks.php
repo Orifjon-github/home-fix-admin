@@ -41,7 +41,7 @@ class TaskWorks extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['task_id', 'name', 'price'], 'required'],
+            [['task_id', 'name','name_ru','name_en', 'price'], 'required'],
             [['task_id'], 'integer'],
             [['name', 'is_finished'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
@@ -59,6 +59,8 @@ class TaskWorks extends \yii\db\ActiveRecord
             'id' => 'ID',
             'task_id' => 'Task ID',
             'name' => 'Name',
+            'name_ru' => 'Name Ru',
+            'name_en' => 'Name En',
             'price' => 'Price',
             'is_finished' => 'Is Finished',
             'created_at' => 'Created At',

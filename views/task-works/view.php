@@ -32,6 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'task_id',
             'name:ntext',
+            'name_ru:ntext',
+            'name_en:ntext',
             'price',
             'is_finished',
             'created_at',
