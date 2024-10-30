@@ -33,19 +33,24 @@ class UsersController extends Controller
 
     public function actionCreate(): string
     {
-        $form = new Users();
+        $form = new Users(); // Initialize the model
         $post = Yii::$app->request->post();
-        if ($post) {
-            $service = new HomeFixService();
-            $user = $service->createUser($post['Users']);
-            if (!$user) {
-                Yii::$app->session->setFlash('error', $service->message);
+
+        // Print the POST data for debuggin
+        // Load POST data into the model and validate it
+        if ($form->load($post) && $form->validate()) {
+            // Attempt to save the model data to the database
+            if ($form->save()) {
+                Yii::$app->session->setFlash('success', 'User created successfully.');
+                return $this->render('view', [
+                    'model' => $form,
+                ]);
             } else {
-                Yii::$app->session->setFlash('success', 'Corporate Client created successfully');
-                return $this->actionView($user['id']);
+                Yii::$app->session->setFlash('error', 'Failed to save the user.');
             }
         }
 
+        // Render the create view if validation fails or data is not saved
         return $this->render('create', [
             'model' => $form,
         ]);
