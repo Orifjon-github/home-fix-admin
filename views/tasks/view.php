@@ -128,6 +128,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="card">
         <div class="card-body">
             <h1>Images</h1>
+            <?= Html::a('Create Images', ['/task-images/create'], ['class' => 'btn btn-success']) ?>
             <div class="row">
                 <?php foreach ($images->getModels() as $model): ?>
                     <div class="col-md-3"> <!-- Adjust the column size as needed -->

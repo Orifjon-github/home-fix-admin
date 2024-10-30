@@ -40,7 +40,7 @@ class TaskImages extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['task_id', 'image'], 'required'],
+            [['task_id'] ,'required'],
             [['task_id'], 'integer'],
             [['image', 'state'], 'string'],
             [['created_at', 'updated_at'], 'safe'],

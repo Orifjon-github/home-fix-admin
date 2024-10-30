@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "tasks".
@@ -85,7 +86,15 @@ class Tasks extends \yii\db\ActiveRecord
     }
     public function getMaterials(){
        return TasksMaterials::find()->where(['task_id' => $this->id])->all();
-
     }
 
+    public static function services(): array
+    {
+        $services = self::find()
+            ->select(['id', 'name'])
+            ->asArray()
+            ->all();
+
+        return ArrayHelper::map($services, 'id', 'name');
+    }
 }
