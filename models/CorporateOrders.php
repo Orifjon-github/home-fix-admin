@@ -78,6 +78,6 @@ class CorporateOrders extends \yii\db\ActiveRecord
             ->asArray()
             ->all();
 
-        return ArrayHelper::map($users, 'id', 'user_home_id');
+        return ArrayHelper::map($users, 'id', 'name');
     }
 }
