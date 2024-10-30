@@ -43,9 +43,9 @@ class TaskMaterials extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['task_id', 'name'], 'required'],
+            [['task_id', 'name' , 'name_ru' , 'name_en'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
-            [['task_id', 'name', 'description', 'price', 'quantity', 'quantity_type'], 'string', 'max' => 255],
+            [['task_id', 'name', 'description' ,'description_ru' ,'description_en', 'price', 'quantity', 'quantity_type'], 'string', 'max' => 255],
         ];
     }
 
@@ -58,7 +58,11 @@ class TaskMaterials extends \yii\db\ActiveRecord
             'id' => 'ID',
             'task_id' => 'Task ID',
             'name' => 'Name',
+            'name_en'=>'Name En',
+            'name_ru'=>'Name Ru',
             'description' => 'Description',
+            'description_ru' => 'Description Ru',
+            'description_en' => 'Description En',
             'price' => 'Price',
             'quantity' => 'Quantity',
             'quantity_type' => 'Quantity Type',

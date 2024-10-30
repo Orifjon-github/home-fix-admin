@@ -7,7 +7,7 @@ nbproject
 /config/db2.php
 /config/db3.php
 /config/db4.php
-
+/web/uploads
 # zend studio for eclipse project files
 .buildpath
 .project
