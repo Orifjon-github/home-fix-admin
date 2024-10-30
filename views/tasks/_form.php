@@ -30,9 +30,10 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'name_ru')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'name_en')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'start_time')->textInput(['maxlength' => true, 'class' => 'form-control datetime-picker']) ?>
+    <?= $form->field($model, 'start_time')->input('datetime-local', ['class' => 'form-control datetime-picker']) ?>
 
-    <?= $form->field($model, 'end_time')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'end_time')->input('datetime-local', ['class' => 'form-control']) ?>
+
 
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'description_ru')->textInput(['maxlength' => true]) ?>
