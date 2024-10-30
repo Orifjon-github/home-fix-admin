@@ -68,7 +68,7 @@ class Plans extends \yii\db\ActiveRecord
 
     public static function plans(): array
     {
-        $plans = self::find()
+        $plans = self::find()->where(['type'=>'corporate'])
             ->select(['id', 'duration'])
             ->asArray()
             ->all();

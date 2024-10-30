@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'start_time')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'start_time')->textInput(['maxlength' => true, 'class' => 'form-control datetime-picker']) ?>
 
     <?= $form->field($model, 'end_time')->textInput(['maxlength' => true]) ?>
 
