@@ -39,7 +39,7 @@ class UsersController extends Controller
         // Print the POST data for debuggin
         // Load POST data into the model and validate it
         if ($form->load($post) && $form->validate()) {
-            // Attempt to save the model data to the database
+            $form->password = Yii::$app->security->generatePasswordHash($form->password);
             if ($form->save()) {
                 Yii::$app->session->setFlash('success', 'User created successfully.');
                 return $this->render('view', [

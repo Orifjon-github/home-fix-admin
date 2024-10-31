@@ -11,6 +11,7 @@ use mdm\admin\models\form\Signup;
 use mdm\admin\models\searchs\User as UserSearch;
 use mdm\admin\models\User;
 use Yii;
+use yii\base\Exception;
 use yii\base\InvalidParamException;
 use yii\base\UserException;
 use yii\filters\VerbFilter;
@@ -58,6 +59,11 @@ class UserController extends Controller
         }
         return false;
     }
+
+    /**
+     * @throws Exception
+     * @throws \yii\db\Exception
+     */
 
     /**
      * @inheritdoc

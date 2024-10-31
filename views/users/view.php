@@ -34,6 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     \app\services\HelperService::image(),
                     'created_at',
                     'updated_at',
+                    'password',
                 ],
             ]) ?>
         </div>

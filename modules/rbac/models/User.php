@@ -56,9 +56,21 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             ['status', 'in', 'range' => [UserStatus::ACTIVE, UserStatus::INACTIVE]],
+            [['username', 'password'], 'required'],
         ];
     }
-
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'username' => 'Username',
+            'name' => 'Name',
+            'password' => 'Password',
+            'status' => 'Status',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+        ];
+    }
     /**
      * @inheritdoc
      */
