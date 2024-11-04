@@ -32,6 +32,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'task_id',
             'image:ntext',
+            [
+                'attribute' => 'image',
+                'format' => 'raw', // This allows HTML to be rendered in the cell
+                'value' => function ($model) {
+                    return \yii\helpers\Html::img($model->image, ['alt' => $model->state, 'style' => 'width:50px; height:auto;']) ;
+                },
+                'label' => 'Equipment Name',
+            ],
             'state',
             'created_at',
             //'updated_at',
