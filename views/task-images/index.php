@@ -36,8 +36,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'image',
                 'format' => 'raw', // This allows HTML to be rendered in the cell
                 'value' => function ($model) {
-                    return \yii\helpers\Html::img($model->image, ['alt' => $model->state, 'style' => 'width:50px; height:auto;']) ;
+                    // Prepend a leading slash to the image path
+                    $imageUrl = '/' . ltrim($model->image, '/'); // Ensure there's only one leading slash
+
+                    return \yii\helpers\Html::img($imageUrl, ['alt' => $model->state, 'style' => 'width:50px; height:auto;']);
                 },
+
                 'label' => 'Equipment Name',
             ],
             'state',
