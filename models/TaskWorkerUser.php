@@ -18,6 +18,7 @@ class TaskWorkerUser extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    public $status;
     public static function tableName()
     {
         return 'task_worker_user';
@@ -37,8 +38,9 @@ class TaskWorkerUser extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['task_id', 'worker_user_id'], 'required'],
+            [['task_id', 'worker_user_id' ], 'required'],
             [['created_at', 'updated_at'], 'safe'],
+
             [['task_id', 'worker_user_id'], 'string', 'max' => 255],
         ];
     }

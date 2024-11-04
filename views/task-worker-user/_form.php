@@ -27,6 +27,8 @@ use yii\widgets\ActiveForm;
     }
     ?>
 
+    <?= $form->field($model, 'status')->dropDownList(['done' => 'Done', 'process' => 'Process' , 'new'=>'New' , 'checking'=>'Checking'], ['prompt' => '']) ?>
+
     <?= $form->field($model, 'worker_user_id')->dropDownList($workerList, ['prompt' => 'Select Worker', 'maxlength' => 1]) ?>
 
     <?= $form->field($model, 'created_at')->textInput() ?>

@@ -2,8 +2,10 @@
 
 namespace app\controllers;
 
+use app\models\Tasks;
 use app\models\TaskWorkerUser;
 use app\models\TaskWorkerUserSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -92,8 +94,11 @@ class TaskWorkerUserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $task = Tasks::findOne($model->task_id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            $task->status =  $this->request->post()['TaskWorkerUser']['status'] ;
+            $task->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
