@@ -1,6 +1,7 @@
 <?php
 
 use app\models\WorkerUsers;
+use app\services\HelperService;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -30,19 +31,11 @@ $this->params['breadcrumbs'][] = $this->title;
                    'id',
                    'name',
                    'username',
-                   \app\services\HelperService::image(),
+                   HelperService::image(),
                    'email_verified_at:email',
-                   //'password',
-                   //'status',
-                   //'remember_token',
-                   //'created_at',
-                   //'updated_at',
-                   [
-                       'class' => ActionColumn::className(),
-                       'urlCreator' => function ($action, WorkerUsers $model, $key, $index, $column) {
-                           return Url::toRoute([$action, 'id' => $model->id]);
-                       }
-                   ],
+                   'status',
+                   'created_at',
+                   HelperService::action(),
                ],
            ]); ?>
        </div>

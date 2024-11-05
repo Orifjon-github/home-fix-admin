@@ -2,179 +2,133 @@
 
 namespace app\controllers;
 
-use app\models\Partners;
-use app\models\PartnersSearch;
-use app\services\HelperService;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Reader\Html;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Style\Alignment;
-use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use Yii;
+use app\models\Objects;
+use app\models\BotObjectsSearch;
 use yii\web\Controller;
-use yii\web\Response;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
 
-
+/**
+ * BotObjectsController implements the CRUD actions for Objects model.
+ */
 class BotObjectsController extends Controller
 {
-    public function actionIndex(): string
+    /**
+     * @inheritDoc
+     */
+    public function behaviors()
     {
-        return HelperService::index($this, new PartnersSearch());
+        return array_merge(
+            parent::behaviors(),
+            [
+                'verbs' => [
+                    'class' => VerbFilter::className(),
+                    'actions' => [
+                        'delete' => ['POST'],
+                    ],
+                ],
+            ]
+        );
     }
 
-    public function actionView($id): string
+    /**
+     * Lists all Objects models.
+     *
+     * @return string
+     */
+    public function actionIndex()
     {
-        return HelperService::viewModel($this, new Partners(), $id);
+        $searchModel = new BotObjectsSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
-    public function actionCreate(): Response|string
+    /**
+     * Displays a single Objects model.
+     * @param string $id ID
+     * @return string
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionView($id)
     {
-        return HelperService::createModel($this, new Partners(), 'icon');
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
     }
 
-    public function actionUpdate($id): Response|string
+    /**
+     * Creates a new Objects model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return string|\yii\web\Response
+     */
+    public function actionCreate()
     {
-        return HelperService::updateModel($this, new Partners(), $id, 'icon');
+        $model = new Objects();
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        } else {
+            $model->loadDefaultValues();
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
-    public function actionDelete($id): Response
+    /**
+     * Updates an existing Objects model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param string $id ID
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionUpdate($id)
     {
-        HelperService::findModel(new Partners(), $id)->delete();
+        $model = $this->findModel($id);
+
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Deletes an existing Objects model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param string $id ID
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionDelete($id)
+    {
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
-    public function actionEnable($id): Response
+    /**
+     * Finds the Objects model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param string $id ID
+     * @return Objects the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
     {
-        $model = HelperService::findModel(new Partners(), $id);
-        HelperService::changeEnableDisable($model);
-        return $this->redirect('index');
-    }
-
-    public function actionExcel()
-    {
-
-        $htmlContent = file_get_contents(Yii::getAlias('@webroot/table.html'));
-
-        $htmlContent = preg_replace_callback(
-            '/<img[^>]+src="([^">]+)"[^>]*>/i',
-            function ($matches) {
-                $imagePath = Yii::getAlias('@webroot/') . $matches[1];
-                // Rasm mavjudligini tekshirish
-                if (!file_exists($imagePath)) {
-                    // Agar rasm mavjud bo'lmasa, "Rasm topilmadi" matnini qo'shish
-                    return '<div>Rasm topilmadi</div>';
-                }
-                // Agar rasm mavjud bo'lsa, asl img tegi
-                return $matches[0];
-            },
-            $htmlContent
-        );
-
-        $spreadsheet = new Spreadsheet();
-
-        $reader = new Html();
-        $reader->loadFromString($htmlContent, $spreadsheet);
-
-
-        $directory = Yii::getAlias('@webroot/uploads/reports');
-
-        $fileName = 'Coffee_Issimo_' . time() . '.xlsx';
-        $filePath = $directory . '/' . $fileName;
-
-        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-        $writer->save($filePath);
-
-        return Yii::$app->response->sendFile($filePath)->send();
-
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-
-        $sheet->mergeCells('A1:J1');
-        $sheet->setCellValue('A1', 'Акт об осмотре');
-        $sheet->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-
-        $sheet->setCellValue('B2', 'Название компании');
-        $sheet->getStyle('B2')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $sheet->getColumnDimension('B')->setAutoSize(true);
-        $sheet->mergeCells('C2:G2');
-        $sheet->setCellValue('C2', 'Fish and Bread');
-
-        $sheet->setCellValue('B3', 'Цель осмотра');
-        $sheet->getStyle('B3')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $sheet->getColumnDimension('B')->setAutoSize(true);
-        $sheet->mergeCells('C3:L3');
-        $sheet->setCellValue('C3', 'Полный осмотр и диагностика электропроводки выдвижного зонта');
-
-        $sheet->setCellValue('B4', 'Общие сведения об осмотре:');
-        $sheet->getStyle('B4')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $sheet->getColumnDimension('B')->setAutoSize(true);
-        $sheet->mergeCells('C4:L4');
-        $sheet->setCellValue('C4', 'Осмотрели проводку. Лед лампы');
-
-        $sheet->setCellValue('A6', '№');
-        $sheet->setCellValue('B6', 'Наименование');
-        $sheet->setCellValue('C6', 'кол-во');
-        $sheet->setCellValue('D6', 'Фото');
-        $sheet->setCellValue('E6', 'Описание');
-        $sheet->setCellValue('F6', 'время выполнения');
-        $sheet->setCellValue('G6', 'расходный материал');
-        $sheet->setCellValue('H6', 'ед-изм');
-        $sheet->setCellValue('I6', 'кол-во');
-        $sheet->setCellValue('J6', 'цена');
-        $sheet->setCellValue('K6', 'сумма');
-        $sheet->setCellValue('L6', 'Оплата за работу');
-        $sheet->setCellValue('M6', 'Итого');
-
-        $this->insertProductRow($sheet, 7, 1, 'Led светильник', 16, 'storage/images/picture-1.jpg', 'Заменить. (Окисление в контактах. Пластмассовые детали утеряли прочность от перепада температуры)', 'Led 24v', 'п.м', 3.2, 47040, 150528, 78400, 1404928);
-        $this->insertProductRow($sheet, 8, 2, 'Led светильник', 12, 'storage/images/picture-2.jpg', 'Неисправность. Замена.', 'Led 24v', 'п.м', 2.4, 47040, 112896, 78400, 1053696);
-        $this->insertProductRow($sheet, 9, 3, 'Проводка между лампами', 35, 'storage/images/picture-3.jpg', 'Окисление. Обрыв.  Замена.', 'Провод 2*2,5 (Морозостойкий)', 'п.м', 40, 28560, 1142400, 78400, 3886400);
-        $this->insertProductRow($sheet, 10, 4, 'Основной провод питания', 8, 'storage/images/picture-4.jpg', 'Обрыв в сети. Нужно заменить.', 'Провод 2*2,5 (Морозостойкий)', 'п.м', 10, 28560, 285600, 78400, 912800);
-
-        $sheet->setCellValue('A11', 'Итого');
-        $sheet->setCellValue('N11', '7 257 824');
-
-
-        $directory = Yii::getAlias('@webroot/uploads/reports');
-
-        $fileName = 'Coffee_Issimo_' . time() . '.xlsx';
-        $filePath = $directory . '/' . $fileName;
-
-        $writer = new Xlsx($spreadsheet);
-        $writer->save($filePath);
-
-        return Yii::$app->response->sendFile($filePath)->send();
-    }
-
-    // Mahsulotni kiritish va rasmni joylash
-    private function insertProductRow($sheet, $row, $number, $name, $quantity, $imagePath, $description, $material, $unit, $unitQty, $price, $totalPrice, $workPayment, $finalTotal): void
-    {
-        $sheet->setCellValue('A' . $row, $number);
-        $sheet->setCellValue('B' . $row, $name);
-        $sheet->setCellValue('C' . $row, $quantity);
-
-        // Rasmni qo'shish
-        if (file_exists($imagePath)) {
-            $drawing = new Drawing();
-            $drawing->setName($name);
-            $drawing->setDescription($name);
-            $drawing->setPath($imagePath); // Rasmning yo'li
-            $drawing->setHeight(80); // Rasmni balandligini sozlash
-            $drawing->setCoordinates('D' . $row); // Rasmni joylash
-            $drawing->setWorksheet($sheet);
-        } else {
-            $sheet->setCellValue('D' . $row, 'Rasm topilmadi: ' . $imagePath);
+        if (($model = Objects::findOne(['id' => $id])) !== null) {
+            return $model;
         }
 
-        $sheet->setCellValue('E' . $row, $description);
-        $sheet->setCellValue('F' . $row, ''); // vaqt hozir kiritilmagan
-        $sheet->setCellValue('G' . $row, $material);
-        $sheet->setCellValue('H' . $row, $unit);
-        $sheet->setCellValue('I' . $row, $unitQty);
-        $sheet->setCellValue('J' . $row, $price);
-        $sheet->setCellValue('K' . $row, $totalPrice);
-        $sheet->setCellValue('L' . $row, $workPayment);
-        $sheet->setCellValue('M' . $row, $finalTotal);
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
