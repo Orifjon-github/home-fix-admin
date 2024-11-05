@@ -46,7 +46,7 @@ class Tasks extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['home_equipment_id', 'name', 'name_ru','name_en', 'status'], 'required'],
+            [['home_equipment_id', 'name','status'], 'required'],
             [['type', 'service_type','service_type_ru','service_type_en', 'name', 'description', 'status'], 'string', 'max' => 255],
             [['duration', 'is_equipment'], 'integer'],
             [['start_time', 'end_time', 'created_at', 'updated_at'], 'safe'],
