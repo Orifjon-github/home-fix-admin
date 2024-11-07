@@ -12,10 +12,11 @@ $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="advantages-update">
 
-
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+   <div class="card">
+       <div class="card-body">
+           <?= $this->render('_form', [
+               'model' => $model,
+           ]) ?>
+       </div>
+   </div>
 </div>
