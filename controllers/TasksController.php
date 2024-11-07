@@ -63,7 +63,6 @@ class TasksController extends Controller
     {
         $materials = new ActiveDataProvider([
             'query' => TasksMaterials::find()->where(['task_id' => $id]),
-
         ]);
         $taskImages = new ActiveDataProvider([
             'query'=> TaskImages::find()->where(['task_id' => $id])
@@ -86,7 +85,7 @@ class TasksController extends Controller
             'materials' => $materials,
             'images'=>$taskImages,
             'works'=>$taskWorks,
-'workers'=>$workers
+            'workers'=>$workers
 //            'equptments'=>$equptments
         ]);
     }
