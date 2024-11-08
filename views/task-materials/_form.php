@@ -33,7 +33,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'quantity')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'quantity_type')->textInput(['maxlength' => true]) ?>
-
+    <?= $form->field($model, 'type')->dropDownList([1 => 'Equipment', 2 => 'Material'], ['prompt' => 'Select Type']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
