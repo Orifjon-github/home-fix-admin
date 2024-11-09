@@ -43,7 +43,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'duration')->textInput() ?>
 
 
-    <?= $form->field($model, 'is_equipment')->dropDownList(['1'=>'Oldindi' , '0'=>'Buzilgan']) ?>
+    <?= $form->field($model, 'is_equipment')->dropDownList(['1'=>'Uskuna Olindi' , '0'=>'Uskuna Olinmadi']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

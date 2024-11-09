@@ -102,6 +102,18 @@ $this->params['breadcrumbs'][] = $this->title;
                     'task_id',
                     'name',
                     'description',
+                    [
+                        'attribute' => 'type',
+                        'value' => function ($model) {
+                            $typeLabels = [1 => 'Equipment', 2 => 'Material'];
+                            return $typeLabels[$model->type] ?? 'Unknown';
+                        },
+                        'filter' => [
+                            1 => 'Equipment',
+                            2 => 'Material'
+                        ],
+                    ],
+
                     'price',
                     'quantity',
                     'quantity_type',
@@ -133,7 +145,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php foreach ($images->getModels() as $model): ?>
                     <div class="col-md-3"> <!-- Adjust the column size as needed -->
                         <div class="card mb-3">
-                            <img src="/<?= Html::encode($model->image) ?>" class="card-img-top" alt="Image" style="width:100%; height:auto;">
+                            <img src="<?= Html::encode($model->image) ?>" class="card-img-top" alt="Image" style="width:100%; height:auto;">
                             <div class="card-body">
 
                                 <p class="card-text"><small class="text-muted"><?= Html::encode($model->state) ?></small></p>
