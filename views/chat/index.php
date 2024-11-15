@@ -19,11 +19,11 @@ $this->title = 'Chat Section';
                         <input type="text" class="form-control" placeholder="Search...">
                     </div>
                     <ul class="list-unstyled chat-list mt-2 mb-0" id="user_section" style="max-height: 400px; overflow-y: auto;">
-                        <?php foreach ($data['documents'] as $doc): ?>
+                        <?php foreach ($data['documents'] as $key=>$doc): ?>
                             <?php
                             $lastMessages = $doc['fields']['last_message'] ?? [];
                             if (!empty($lastMessages)):?>
-                                <li class="clearfix" onclick="showChat('<?php echo $doc['name'] ?>' , this)">
+                                <li class="clearfix" id="chatsBloc" data-id="<?php echo $lastMessages['mapValue']['fields']['owner']['stringValue'] ?>" >
                                     <div class="about">
                                         <div class="name">
                                             <?php
@@ -38,7 +38,7 @@ $this->title = 'Chat Section';
                                     </div>
                                 </li>
                             <?php else: ?>
-                                <li class="clearfix" onclick="showChat('<?php echo $doc['name'] ?>')">
+                                <li class="clearfix" >
                                     <div class="about">
                                         <div class="name">Unknown User</div>
                                         <div class="status">No message available</div>
@@ -69,16 +69,14 @@ $this->title = 'Chat Section';
                         </div>
                     </div>
                     <div class="chat-history" style="max-height: 400px; overflow-y: auto;">
-                        <ul class="m-b-0" id="chatsection" style="height: 400px;width: 100%;">
-
-                        </ul>
+                        <ul class="m-b-0" id="chatsection" style="height: 400px;width: 100%;"></ul>
                     </div>
                     <div class="chat-message clearfix d-flex">
                         <div class="input-group mb-0">
-                            <input type="text" class="form-control" id="inputValue" placeholder="Enter text here...">
+                            <label for="inputValue"></label><input type="text" class="form-control" id="inputValue" placeholder="Enter text here...">
                         </div>
                         <div class="input-group mb-0">
-                            <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+                            <button class="btn btn-primary" id="sendBtn" data-chat="" data-user="<?php echo Yii::$app->user->identity->getId() ?>">Send</button>
                         </div>
                     </div>
                 </div>
@@ -86,101 +84,126 @@ $this->title = 'Chat Section';
         </div>
     </div>
 </div>
-<script>
-    async function showChat(id , bloc) {
-        // const url = `https://firestore.googleapis.com/v1/projects/homefixuz/databases/(default)/documents/chats`;
-        var chatsection = document.getElementById('chatsection');
-        var blocs = document.querySelectorAll('.clearfix');
-        var userid = "<?php echo Yii::$app->user->identity->getId() ?>"
-        const url = `https://firestore.googleapis.com/v1/${id}/messages`;
-        blocs.forEach((e)=>{
-            e.classList.remove('active');
-        })
-        bloc.classList.add('active');
 
-        console.log(url)
-        chatsection.innerHTML  = '';
-        chatsection.innerHTML += `
-             <li class="clearfix">
-                 <h1>Loading...</h1>
-             </li>
-            `
-        chatsection.innerHTML  = '';
-        sendMessageToApi("kljasndfklsa" , "kalsjndfklsa")
-        try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error('Chat not found.');
-            }
-            const data = await response.json();
-            console.log(data)
-            data.documents.forEach((e)=>{
-                // console.log(e)
-                const text = e.fields?.text?.stringValue ?? '';
-                if(e.fields?.owner?.stringValue === userid){
-                    chatsection.innerHTML +=`
-                   <li class="clearfix">
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
+    import { getFirestore, collection, getDocs ,query   ,addDoc   , orderBy  } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-firestore.js";
+
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCgLhhjZj7VMZBFcPXc12vI_LgBy0iEQtc",
+        authDomain: "homefixuz.firebaseapp.com",
+        projectId: "homefixuz",
+        storageBucket: "homefixuz.appspot.com",
+        messagingSenderId: "37662653885",
+        appId: "1:37662653885:web:a4607a4b8ae2c90b8ce6d4",
+        measurementId: "G-8MWXT3B5RH",
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    async function showChat() {
+        var chatsBloc  = document.querySelectorAll('#chatsBloc');
+        var chatsection = document.getElementById('chatsection');
+        var sendBtn = document.getElementById('sendBtn');
+        var userid = "<?php echo Yii::$app->user->identity->getId() ?>"
+        chatsection.innerHTML+='';
+        chatsBloc.forEach((btn)=>{
+            console.log(btn)
+            btn.addEventListener('click', async () => {
+                const action = btn.getAttribute('data-id');
+                console.log("Chat ID from button:", action);
+                try {
+                    chatsection.innerHTML = '';
+                    const chatMessagesRef = collection(db, "chats", action, "messages");
+                    const q = query(chatMessagesRef ,orderBy('time', 'asc'));
+                    const querySnapshot = await getDocs(q);
+                    if (querySnapshot.empty) {
+                        console.log("No messages found for this chat.");
+                    }
+                    querySnapshot.forEach((doc) => {
+                        const messageData = doc.data();
+                        console.log(messageData)
+                        if(messageData.owner === userid){
+
+                            chatsection.innerHTML +=`
+                        <li class="clearfix">
                             <div class="message-data text-right">
-                                <span class="message-data-time">${e.createTime}</span>
-                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
+
                             </div>
-                            <div class="message other-message float-right">${text}</div>
+                            <div class="message other-message float-right">${messageData.text}</div>
                         </li>`
-                }else{
-                    chatsection.innerHTML +=`
-                   <li class="clearfix">
-                            <div class="message-data">
-                                <span class="message-data-time">${e.createTime}</span>
+                        }else{
+                            chatsection.innerHTML +=`
+                             <li class="clearfix">
+                                 <div class="message-data">
+                                 <span class="message-data-time">${messageData.time}</span>
                             </div>
-                            <div class="message my-message">${text}</div>
+                            <div class="message my-message">${messageData.text}</div>
                         </li> `
+                        }
+                    });
+                    sendBtn.setAttribute('data-chat', action);
+
+                } catch (e) {
+                    console.error("Error loading messages: ", e);
                 }
-            })
-
-        } catch (error) {
-            console.error('Error fetching chat details:', error);
-            alert('Error: ' + error.message);
-        }
-    }
-    function sendMessage() {
-        var chatsection = document.getElementById('chatsection');
-        const messageInput = document.getElementById('inputValue');
-        const messageText = messageInput.value;
-        var userid = "<?php echo Yii::$app->user->identity->getId() ?>"
-        if (messageText.trim() === '') return;
-        chatsection.innerHTML += `
-        <div class="message other-message float-right">
-            ${messageText}
-        </div> `;
-        sendMessageToApi(messageText , userid)
-        messageInput.value = '';
-    }
-    function sendMessageToApi(message , userid){
-        const firestoreUrl = 'https://firestore.googleapis.com/v1/projects/homefixuz/databases/(default)/documents/chats';
-        const firebaseToken = "";
-        const messageData = {
-            fields: {
-                text: { stringValue: message }, // Message text
-                sender: { stringValue: userid }, // Sender's ID
-                timestamp: { timestampValue: new Date().toISOString() }, // Timestamp of the message
-            }
-        };
-
-        fetch(firestoreUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${firebaseToken}`, // Pass the Firebase token for authentication
-            },
-            body: JSON.stringify(messageData),
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Message sent to Firestore:', data);
-            })
-            .catch(error => {
-                console.error('Error sending message to Firestore:', error);
             });
+        })
+    }
+    showChat()
+    async function sendMessage() {
+        var sendBtn = document.getElementById('sendBtn');
+        sendBtn.addEventListener('click', async () => {
+            var chatsection = document.getElementById('chatsection');
+            const messageInput = document.getElementById("inputValue");
+            const messageText = messageInput.value;  // Get the value from the input field
+
+            console.log("Message Text: ", messageText);  // Log the message text to see if it's being retrieved correctly
+
+            if (messageText.trim() === "") {
+                console.log("Message is empty, not sending.");
+                return;  // Exit if the message is empty
+            }
+
+            try {
+                var id = sendBtn.getAttribute('data-chat');
+                var user = sendBtn.getAttribute('data-user');
+                const chatMessagesRef = collection(db, "chats", id, "messages");
+
+                await addDoc(chatMessagesRef, {
+                    text: messageText,
+                    owner: user, // The owner can be the chat's user ID
+                    read: false,  // Set the message as unread initially
+                    time: getFormattedTimestamp() // Use Firestore's server timestamp
+                });
+                chatsection.innerHTML +=`
+                        <li class="clearfix">
+                            <div class="message-data text-right">
+
+                            </div>
+                            <div class="message other-message float-right">${messageText}</div>
+                        </li>`
+                messageInput.value = "";
+            } catch (e) {
+                console.error("Error sending message: ", e);
+            }
+        });
+    }
+
+    // Call the sendMessage function when the script loads
+    sendMessage();
+    function getFormattedTimestamp() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const milliseconds = String(now.getMilliseconds()).padStart(3, '0');  // Milliseconds
+        const microseconds = '000';  // Firestore does not support microseconds directly, so adding 3 extra zeros
+
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}${microseconds}`;
     }
 
 </script>
