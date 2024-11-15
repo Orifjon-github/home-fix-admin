@@ -189,7 +189,6 @@ $this->title = 'Chat Section';
             }
         });
     }
-
     // Call the sendMessage function when the script loads
     sendMessage();
     function getFormattedTimestamp() {
