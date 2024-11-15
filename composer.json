@@ -21,7 +21,11 @@
         "dmstr/yii2-adminlte-asset": "3.0.0-beta1",
         "guzzlehttp/guzzle": "^7.5",
         "mihaildev/yii2-ckeditor": "*",
-        "phpoffice/phpspreadsheet": "^3.3"
+        "phpoffice/phpspreadsheet": "^3.3",
+        "kreait/firebase-php": "^7.15",
+        "grpc/grpc": "^1.57",
+        "yiisoft/yii2-httpclient": "^2.0",
+        "google/apiclient": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
