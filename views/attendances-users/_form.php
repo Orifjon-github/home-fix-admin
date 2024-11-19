@@ -1,5 +1,6 @@
 <?php
 
+use app\models\AttendanceBranches;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -16,7 +17,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'branch_id')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'branch_id')->dropDownList(
+        \yii\helpers\ArrayHelper::map(AttendanceBranches::find()->all(), 'id', 'name'),
+        ['prompt' => 'Select Branch']
+    ) ?>
+
 
     <?= $form->field($model, 'in_office')->dropDownList([ '0', '1', ], ['prompt' => '']) ?>
 
