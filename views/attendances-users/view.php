@@ -55,6 +55,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'pagination' => [
                     'pageSize' => 10, // Optional, controls how many rows per page
                 ],
+                'sort' => [
+                    'attributes' => [
+                        'created_at', // The field to sort by
+                    ],
+                    'defaultOrder' => [
+                        'created_at' => SORT_DESC, // or SORT_ASC for ascending order
+                    ],
+                ],
             ]);
             ?>
             <?php
